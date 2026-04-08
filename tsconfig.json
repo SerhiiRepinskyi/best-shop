@@ -12,7 +12,7 @@
     "allowJs": false,                    
   },
   "include": [
-    "src/ts/main.ts"
+    "src/ts/**/*.ts"
   ],
   "exclude": [
     "node_modules",
