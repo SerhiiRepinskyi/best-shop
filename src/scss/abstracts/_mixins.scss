@@ -1,0 +1,16 @@
+@use "../abstracts/variables" as *;
+
+// ── Mixins ─────────────────────────────
+@mixin respond($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $bp-mobile) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tablet {
+    @media (max-width: $bp-tablet) {
+      @content;
+    }
+  }
+}
