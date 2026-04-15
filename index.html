@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Best Shop</title>
 
-    <link rel="stylesheet" href="../dist/css/main.css" />
+    <link rel="stylesheet" href="/src/scss/main.scss" />
   </head>
   <body>
     <header class="header">
@@ -75,10 +75,10 @@
           </button>
 
           <!-- Logo -->
-          <a href="./index.html" class="logo">
+          <a href="/" class="logo">
             <span class="logo__icon-box">
               <img
-                src="./assets/icons/suitcase.svg"
+                src="/src/assets/icons/suitcase.svg"
                 alt="Best Shop"
                 class="logo__icon"
                 width="32"
@@ -133,11 +133,11 @@
           <nav class="nav" aria-label="Main navigation">
             <ul class="nav__list" role="list">
               <li class="nav__item">
-                <a href="./index.html" aria-current="page">Home</a>
+                <a href="/" aria-current="page">Home</a>
               </li>
 
               <li class="nav__item">
-                <a href="./html/catalog.html">
+                <a href="/html/catalog.html">
                   Catalog
                   <svg
                     class="nav__arrow"
@@ -156,7 +156,7 @@
               </li>
 
               <li class="nav__item">
-                <a href="./html/about.html"
+                <a href="/html/about.html"
                   >About Us
                   <svg
                     class="nav__arrow"
@@ -175,7 +175,7 @@
               </li>
 
               <li class="nav__item">
-                <a href="./html/contact.html"
+                <a href="/html/contact.html"
                   >Contact Us
                   <svg
                     class="nav__arrow"
@@ -214,7 +214,7 @@
                 ultricies enim.
               </p>
 
-              <a href="./html/catalog.html" class="btn btn--lg hero__btn">
+              <a href="/html/catalog.html" class="btn btn--lg hero__btn">
                 View All Items
               </a>
             </div>
@@ -223,16 +223,16 @@
               <picture>
                 <source
                   srcset="
-                    ./assets/images/hero-main-suitcase.webp    1x,
-                    ./assets/images/hero-main-suitcase@2x.webp 2x
+                    /src/assets/images/hero-main-suitcase.webp    1x,
+                    /src/assets/images/hero-main-suitcase@2x.webp 2x
                   "
                   type="image/webp"
                 />
                 <img
-                  src="./assets/images/hero-main-suitcase.png"
+                  src="/src/assets/images/hero-main-suitcase.png"
                   srcset="
-                    ./assets/images/hero-main-suitcase.png    1x,
-                    ./assets/images/hero-main-suitcase@2x.png 2x
+                    /src/assets/images/hero-main-suitcase.png    1x,
+                    /src/assets/images/hero-main-suitcase@2x.png 2x
                   "
                   alt="Vintage suitcase with travel stickers"
                 />
@@ -249,7 +249,7 @@
               <div class="hero-card">
                 <img
                   class="hero-card__avatar"
-                  src="./assets/images/hero-avatar.webp"
+                  src="/src/assets/images/hero-avatar.webp"
                   alt="Portrait of Lillian Bennett"
                 />
 
@@ -282,17 +282,17 @@
                 <picture>
                   <source
                     srcset="
-                      ./assets/images/hero-promo-suitcases.webp    1x,
-                      ./assets/images/hero-promo-suitcases@2x.webp 2x
+                      /src/assets/images/hero-promo-suitcases.webp    1x,
+                      /src/assets/images/hero-promo-suitcases@2x.webp 2x
                     "
                     type="image/webp"
                   />
                   <img
                     class="hero__bottom-image"
-                    src="./assets/images/hero-promo-suitcases.png"
+                    src="/src/assets/images/hero-promo-suitcases.png"
                     srcset="
-                      ./assets/images/hero-promo-suitcases.png    1x,
-                      ./assets/images/hero-promo-suitcases@2x.png 2x
+                      /src/assets/images/hero-promo-suitcases.png    1x,
+                      /src/assets/images/hero-promo-suitcases@2x.png 2x
                     "
                     alt="Promo suitcases"
                     width="646"
@@ -312,7 +312,7 @@
                     ut. Ut imperdiet et leo in vulputate.
                   </p>
 
-                  <a href="./html/catalog.html" class="btn btn--lg hero__btn">
+                  <a href="/html/catalog.html" class="btn btn--lg hero__btn">
                     Get Discount
                   </a>
                 </div>
@@ -424,6 +424,6 @@
     <!-- 🔹 Overlay -->
     <div class="mobile-overlay"></div>
 
-    <script src="../dist/js/main.js"></script>
+    <script type="module" src="/src/ts/main.ts"></script>
   </body>
 </html>

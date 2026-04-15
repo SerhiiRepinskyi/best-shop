@@ -4,10 +4,9 @@
   "description": "Capstone Project TS Template",
   "main": "index.js",
   "scripts": {
-    "dev": "sass --watch src/scss:dist/css",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Dummy build script required for Autocode Compile\"",
-    "ts-compile": "npx tsc"
+    "dev": "vite",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,7 +17,20 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@types/node": "^25.6.0",
     "sass": "^1.99.0",
     "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "detect-libc": "^2.1.2",
+    "immutable": "^5.1.5",
+    "is-extglob": "^2.1.1",
+    "is-glob": "^4.0.3",
+    "node-addon-api": "^7.1.1",
+    "picomatch": "^4.0.4",
+    "readdirp": "^4.1.2",
+    "source-map-js": "^1.2.1",
+    "vite": "^8.0.8"
   }
 }
