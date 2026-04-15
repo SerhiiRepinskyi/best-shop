@@ -1,0 +1,43 @@
+@use "../abstracts/variables" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: $font-weight-bold;
+  color: $clr-white;
+  background-color: $clr-primary;
+
+  transition: $transition-default;
+
+  &:hover {
+    background-color: darken($clr-primary, 10%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $clr-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Sizes are based on Figma design (not normalized intentionally)
+
+.btn--sm {
+  padding: 12px 20px;
+  font-size: 12px;
+}
+
+.btn {
+  padding: 10px 25px;
+  font-size: 17px;
+}
+
+.btn--lg {
+  padding: 19px 18px;
+  font-size: 18px;
+}

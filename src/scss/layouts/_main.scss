@@ -1,0 +1,20 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+}
+
+@include respond(tablet) {
+  .main {
+    gap: 80px;
+  }
+}
+
+@include respond(mobile) {
+  .main {
+    gap: 60px;
+  }
+}

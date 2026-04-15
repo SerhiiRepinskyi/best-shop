@@ -13,10 +13,12 @@
 @use "./components/product-card";
 
 // Layouts
+@use "./layouts/main";
 @use "./layouts/header.scss";
 @use "./layouts/footer.scss";
 
 // Pages
+@use "./pages/home";
 @use "./pages/about";
 @use "./pages/cart";
 @use "./pages/catalog";

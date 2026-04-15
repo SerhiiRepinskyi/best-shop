@@ -198,13 +198,127 @@
       </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="container">
-          <h1 class="hero__title">Travel Suitcases</h1>
-          <p class="hero__subtitle">
-            Discover the best luggage for your journey
-          </p>
+    <main class="main">
+      <section class="hero section">
+        <!-- TOP -->
+        <div class="hero__top">
+          <div class="container hero__top-inner">
+            <div class="hero__content">
+              <h1 class="hero__title">
+                Smart Styles for <br />
+                Every Destination
+              </h1>
+
+              <p class="hero__subtitle">
+                Phasellus risus turpis, pretium sit amet magna non, molestie
+                ultricies enim.
+              </p>
+
+              <a href="./html/catalog.html" class="btn btn--lg hero__btn">
+                View All Items
+              </a>
+            </div>
+
+            <div class="hero__image">
+              <picture>
+                <source
+                  srcset="
+                    ./assets/images/hero-main-suitcase.webp    1x,
+                    ./assets/images/hero-main-suitcase@2x.webp 2x
+                  "
+                  type="image/webp"
+                />
+                <img
+                  src="./assets/images/hero-main-suitcase.png"
+                  srcset="
+                    ./assets/images/hero-main-suitcase.png    1x,
+                    ./assets/images/hero-main-suitcase@2x.png 2x
+                  "
+                  alt="Vintage suitcase with travel stickers"
+                />
+              </picture>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="hero__bottom">
+          <div class="container hero__bottom-inner">
+            <!-- LEFT -->
+            <div class="hero__bottom-col hero__bottom-col--left">
+              <div class="hero-card">
+                <img
+                  class="hero-card__avatar"
+                  src="./assets/images/hero-avatar.webp"
+                  alt="Portrait of Lillian Bennett"
+                />
+
+                <div class="hero-card__info">
+                  <p class="hero-card__name">Lillian Bennett</p>
+                  <p class="hero-card__role">Chief Marketing Officer</p>
+                </div>
+              </div>
+
+              <h2 class="hero__bottom-title">
+                Aliquam Faucibus <br />
+                Odionecom.
+              </h2>
+
+              <p class="hero__bottom-text hero__bottom-text--top">
+                Duis vestibulum elit vel neque pharetra vulputate. Quisque
+                scelerisque nisi urna. Duis rutrum non risus in imperdiet. Proin
+                molestie accumsan nulla sit.
+              </p>
+              <p class="hero__bottom-text">
+                Namaki duis vestibulum elit vel neque pharetra vulputate.
+                Quisque scelerisque nisi urna.
+              </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="hero__bottom-col hero__bottom-col--right">
+              <div class="hero__promo">
+                <!-- image -->
+                <picture>
+                  <source
+                    srcset="
+                      ./assets/images/hero-promo-suitcases.webp    1x,
+                      ./assets/images/hero-promo-suitcases@2x.webp 2x
+                    "
+                    type="image/webp"
+                  />
+                  <img
+                    class="hero__bottom-image"
+                    src="./assets/images/hero-promo-suitcases.png"
+                    srcset="
+                      ./assets/images/hero-promo-suitcases.png    1x,
+                      ./assets/images/hero-promo-suitcases@2x.png 2x
+                    "
+                    alt="Promo suitcases"
+                    width="646"
+                    height="566"
+                  />
+                </picture>
+
+                <!-- overlay -->
+                <div class="hero__overlay"></div>
+
+                <!-- content -->
+                <div class="hero__bottom-content">
+                  <h2 class="hero__bottom-title">25 % Discount</h2>
+
+                  <p class="hero__bottom-text">
+                    Curabitur vulputate arcu odio, ac facilisis diam accumsan
+                    ut. Ut imperdiet et leo in vulputate.
+                  </p>
+
+                  <a href="./html/catalog.html" class="btn btn--lg hero__btn">
+                    Get Discount
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
