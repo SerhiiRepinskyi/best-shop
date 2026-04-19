@@ -6,16 +6,17 @@
 @use "./base/reset";
 @use "./base/fonts";
 @use "./base/common";
-
-// Components
-@use "./components/buttons";
-@use "./components/forms";
-@use "./components/product-card";
+@use "./base/layout";
 
 // Layouts
 @use "./layouts/main";
 @use "./layouts/header.scss";
 @use "./layouts/footer.scss";
+
+// Components
+@use "./components/buttons";
+@use "./components/forms";
+@use "./components/product-card";
 
 // Pages
 @use "./pages/home";

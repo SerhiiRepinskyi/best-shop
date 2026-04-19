@@ -171,6 +171,10 @@
 
 /*------------ Adaptivity ------------*/
 @include respond(mobile) {
+  .hero__top-inner {
+    flex-direction: column;
+  }
+
   .hero__content {
     margin-right: 0;
   }

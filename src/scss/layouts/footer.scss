@@ -2,15 +2,38 @@
 @use "../abstracts/mixins" as *;
 
 .footer {
-  margin-top: 120px;
-  margin-bottom: 46px;
+  padding-top: 120px;
+  padding-bottom: 46px;
 }
 
 /*------------ BENEFITS ------------*/
 .footer__benefits-bg {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+
   background-color: $clr-text-secondary;
   padding: 37px 0 40px;
   margin-bottom: 120px;
+}
+
+.footer__benefits-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.2;
+
+  background-image: url("/assets/decor/footer-wave.svg");
+  background-repeat: repeat-y;
+  background-position: top left;
+  background-size: 100% 30px;
+}
+
+.footer__benefits-bg > * {
+  position: relative;
+  z-index: 1;
 }
 
 .footer__benefits-title {

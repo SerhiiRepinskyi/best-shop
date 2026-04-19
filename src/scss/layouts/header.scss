@@ -2,8 +2,16 @@
 @use "../abstracts/mixins" as *;
 
 .header {
-  position: sticky;
+  // position: sticky;
+  // top: 0;
+  // z-index: $z-header;
+  // background-color: $clr-white;
+  // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: $z-header;
   background-color: $clr-white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -94,29 +102,29 @@
   gap: 29px;
 }
 
-.nav__item a {
+.nav__item {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.nav__link {
   font-weight: $font-weight-bold;
   font-size: 18px;
   color: $clr-black;
   transition: $transition-default;
+
+  &:hover {
+    color: $clr-primary;
+  }
 }
 
-.nav__item a:hover {
+.nav__arrow-btn:hover {
   color: $clr-primary;
 }
 
-.nav__arrow {
-  opacity: 0;
-  transform: translateY(-5px);
-  transition: $transition-default;
-}
-
-.nav__item:hover .nav__arrow {
-  opacity: 1;
-  transform: translateY(0);
+[data-nav-link][aria-current="page"] {
+  color: $clr-primary;
 }
 
 /*------------ Burger button ------------*/
@@ -199,25 +207,30 @@
   gap: 20px;
 }
 
-.mobile-nav__item a {
+.mobile-nav__item {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.mobile-nav__item a {
   font-weight: $font-weight-bold;
   font-size: 20px;
   color: $clr-black;
   transition: $transition-default;
+
+  &:hover {
+    color: $clr-primary;
+  }
 }
 
-.mobile-nav__item a:hover {
+[data-nav-link][aria-current="page"] {
   color: $clr-primary;
 }
 
 /* arrow */
-.mobile-nav__arrow {
-  opacity: 0.5;
-  transform: translateY(0);
-  transition: $transition-default;
+.mobile-nav__arrow:hover {
+  color: $clr-primary;
 }
 
 /*------------ Overlay ------------*/
