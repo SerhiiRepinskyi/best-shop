@@ -169,8 +169,97 @@
   max-width: 174px;
 }
 
+/*------------ Offer Section ------------*/
+.offer {
+  color: $clr-white;
+}
+
+.offer__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+
+  min-height: 406px;
+  padding: 50px 72px 80px;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    image-set(
+        url("/assets/images/offer-bg.webp") 1x,
+        url("/assets/images/offer-bg@2x.webp") 2x
+      )
+      center / cover no-repeat;
+}
+
+.offer__discount {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+
+  flex: 1 1 52%;
+  min-width: 0;
+}
+
+.offer__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+
+  flex: 1 1 48%;
+  max-width: 430px;
+  min-width: 0;
+}
+
+.offer__discount-value {
+  margin: 0;
+  font-weight: $font-weight-black;
+  font-size: clamp(110px, 16vw, 223px);
+  line-height: 1.1;
+  color: $clr-white;
+}
+
+.offer__discount-text {
+  padding-left: 10px;
+  font-size: 20px;
+  color: $clr-white;
+}
+
+.offer__title {
+  font-weight: $font-weight-black;
+  font-size: clamp(32px, 3vw, 40px);
+  color: $clr-white;
+}
+
+.offer__subtitle {
+  font-size: 17px;
+  color: $clr-white;
+}
+
+.offer__button {
+  width: 100%;
+  max-width: 200px;
+}
+
 /*------------ Adaptivity ------------*/
+@include respond(tablet) {
+  /*------------ Offer Section ------------*/
+  .offer__container {
+    gap: 36px;
+    padding: 30px 40px;
+  }
+
+  .offer__discount-text {
+    font-size: 18px;
+  }
+
+  .offer__content {
+    gap: 24px;
+  }
+}
+
 @include respond(mobile) {
+  /*------------ Hero Section ------------*/
   .hero__top-inner {
     flex-direction: column;
   }
@@ -194,5 +283,38 @@
   .hero__bottom-content {
     left: 24px;
     right: 24px;
+  }
+
+  .hero__btn,
+  .hero__bottom-content .btn {
+    max-width: 100%;
+  }
+
+  /*------------ Offer Section ------------*/
+  .offer__container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 30px 24px;
+  }
+
+  .offer__discount {
+    padding-top: 6px;
+  }
+
+  .offer__content {
+    width: 100%;
+    max-width: none;
+    gap: 22px;
+    padding-bottom: 6px;
+  }
+
+  .offer__discount-text {
+    padding-left: 0;
+    font-size: 17px;
+  }
+
+  .offer__button {
+    max-width: 100%;
   }
 }

@@ -165,7 +165,7 @@
 /*------------ Adaptivity ------------*/
 @include respond(tablet) {
   .footer {
-    margin-top: 80px;
+    padding-top: 80px;
   }
 
   .footer__benefits-bg {
@@ -193,7 +193,7 @@
 
 @include respond(mobile) {
   .footer {
-    margin-top: 60px;
+    padding-top: 60px;
   }
 
   .footer__benefits-bg {
