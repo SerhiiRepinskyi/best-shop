@@ -1,6 +1,181 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
+/*------------ Features ------------*/
+.features__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.features__item {
+  display: flex;
+  gap: 22px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.features__icon {
+  display: block;
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+}
+
+.features__item-title {
+  font-weight: $font-weight-bold;
+  font-size: 20px;
+  color: $clr-black;
+}
+
+.features__text {
+  max-width: 280px;
+  color: $clr-black;
+}
+
+/*------------ Adaptivity Features ------------*/
+@include respond(tablet) {
+  .features__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features__item {
+    gap: 20px;
+  }
+}
+
+@include respond(mobile) {
+  .features__list {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .features__item {
+    gap: 16px;
+    max-width: 320px;
+    justify-self: center;
+  }
+
+  .features__item-title {
+    font-size: 18px;
+  }
+
+  .features__text {
+    font-size: 16px;
+  }
+}
+
+/*------------ Arrivals ------------*/
+.arrivals__container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 615px);
+  align-items: center;
+  gap: 38px;
+}
+
+.arrivals__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.arrivals__title {
+  margin-bottom: 30px;
+
+  font-weight: $font-weight-black;
+  font-size: clamp(32px, 4vw, 40px);
+  color: $clr-black;
+}
+
+.arrivals__text {
+  max-width: 646px;
+  margin-bottom: 26px;
+
+  color: $clr-text-secondary;
+}
+
+.arrivals__text:last-of-type {
+  margin-bottom: 30px;
+}
+
+.arrivals__button {
+  width: 100%;
+  max-width: 200px;
+}
+
+.arrivals__media {
+  width: 100%;
+}
+
+.arrivals__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 615 / 352;
+  object-fit: cover;
+}
+
+/*------------ Adaptivity Arrivals ------------*/
+@include respond(tablet) {
+  .arrivals__container {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .arrivals__content {
+    order: 1;
+    padding: 0;
+  }
+
+  .arrivals__media {
+    order: 2;
+    max-width: 615px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  .arrivals__title {
+    margin-bottom: 28px;
+  }
+
+  .arrivals__text {
+    max-width: none;
+    margin-bottom: 20px;
+  }
+
+  .arrivals__text:last-of-type {
+    margin-bottom: 32px;
+  }
+}
+
+@include respond(mobile) {
+  .arrivals__container {
+    gap: 28px;
+  }
+
+  .arrivals__title {
+    margin-bottom: 22px;
+    text-align: left;
+  }
+
+  .arrivals__text {
+    margin-bottom: 18px;
+    font-size: 16px;
+  }
+
+  .arrivals__text:last-of-type {
+    margin-bottom: 28px;
+  }
+
+  .arrivals__button {
+    max-width: 100%;
+  }
+
+  .arrivals__image {
+    min-height: 240px;
+  }
+}
+
 /*------------ Team ------------*/
 .team__container {
   display: flex;
@@ -141,115 +316,5 @@
 
   .team__position {
     font-size: 16px;
-  }
-}
-
-/*------------ Arrivals ------------*/
-.arrivals__container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 615px);
-  align-items: center;
-  gap: 38px;
-}
-
-.arrivals__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.arrivals__title {
-  margin-bottom: 30px;
-
-  font-weight: $font-weight-black;
-  font-size: clamp(32px, 4vw, 40px);
-  color: $clr-black;
-}
-
-.arrivals__text {
-  max-width: 646px;
-  margin-bottom: 26px;
-
-  color: $clr-text-secondary;
-}
-
-.arrivals__text:last-of-type {
-  margin-bottom: 30px;
-}
-
-.arrivals__button {
-  width: 100%;
-  max-width: 200px;
-}
-
-.arrivals__media {
-  width: 100%;
-}
-
-.arrivals__image {
-  display: block;
-  width: 100%;
-  aspect-ratio: 615 / 352;
-  object-fit: cover;
-}
-
-/*------------ Adaptivity Arrivals ------------*/
-@include respond(tablet) {
-  .arrivals__container {
-    grid-template-columns: 1fr;
-    gap: 38px;
-  }
-
-  .arrivals__content {
-    order: 1;
-    padding: 0;
-  }
-
-  .arrivals__media {
-    order: 2;
-    max-width: 615px;
-    width: 100%;
-    justify-self: center;
-  }
-
-  .arrivals__title {
-    margin-bottom: 28px;
-  }
-
-  .arrivals__text {
-    max-width: none;
-    margin-bottom: 20px;
-  }
-
-  .arrivals__text:last-of-type {
-    margin-bottom: 32px;
-  }
-}
-
-@include respond(mobile) {
-  .arrivals__container {
-    gap: 28px;
-  }
-
-  .arrivals__title {
-    margin-bottom: 22px;
-    text-align: left;
-  }
-
-  .arrivals__text {
-    margin-bottom: 18px;
-    font-size: 16px;
-  }
-
-  .arrivals__text:last-of-type {
-    margin-bottom: 28px;
-  }
-
-  .arrivals__button {
-    max-width: 100%;
-  }
-
-  .arrivals__image {
-    min-height: 240px;
   }
 }
