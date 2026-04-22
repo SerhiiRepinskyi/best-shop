@@ -1,0 +1,181 @@
+@use "../abstracts/variables" as *;
+@use "sass:color";
+
+$form-border-color: rgba($clr-primary, 0.5);
+$form-border-color-hover: rgba($clr-primary, 0.9);
+$form-border-color-focus: $clr-primary;
+$form-text-muted: rgba($clr-black, 0.65);
+$form-error-color: #d64545;
+$form-success-color: #228b57;
+
+// Global form primitives:
+// - keep control appearance and states here;
+// - keep section-specific layout in page-level files.
+.form,
+.feedback-form,
+.login-form,
+.review-form {
+  width: 100%;
+}
+
+.form__field,
+.feedback-form__field,
+.login-form__field,
+.review-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form__field + .form__field,
+.feedback-form__field + .feedback-form__field,
+.login-form__field + .login-form__field,
+.review-form__field + .review-form__field {
+  margin-top: 32px;
+}
+
+.form__label,
+.feedback-form__label,
+.login-form__label,
+.review-form__label {
+  font-weight: $font-weight-bold;
+  font-size: 18px;
+  line-height: 1.2;
+  color: $clr-black;
+}
+
+.form__required,
+.feedback-form__required,
+.login-form__required,
+.review-form__required {
+  color: $clr-primary;
+}
+
+.form__input,
+.form__textarea,
+.feedback-form__input,
+.feedback-form__textarea,
+.login-form__input,
+.login-form__textarea,
+.review-form__input,
+.review-form__textarea {
+  width: 100%;
+  border: 2px solid $form-border-color;
+  background-color: $clr-white;
+  color: $clr-black;
+  transition:
+    border-color $transition-default,
+    box-shadow $transition-default,
+    background-color $transition-default;
+
+  &::placeholder {
+    color: $form-text-muted;
+  }
+
+  &:hover {
+    border-color: $form-border-color-hover;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $form-border-color-focus;
+    box-shadow: 0 0 0 3px rgba($clr-primary, 0.14);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: color.adjust($clr-bg-hero, $lightness: 4%);
+    color: $form-text-muted;
+  }
+
+  &[aria-invalid="true"] {
+    border-color: $form-error-color;
+    box-shadow: 0 0 0 3px rgba($form-error-color, 0.12);
+  }
+}
+
+.form__input,
+.feedback-form__input,
+.login-form__input,
+.review-form__input {
+  min-height: 40px;
+  padding: 8px 14px;
+}
+
+.form__textarea,
+.feedback-form__textarea,
+.login-form__textarea,
+.review-form__textarea {
+  min-height: 96px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.form__message,
+.feedback-form__message,
+.login-form__message,
+.review-form__message {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.form__message--error,
+.feedback-form__message--error,
+.login-form__message--error,
+.review-form__message--error {
+  color: $form-error-color;
+}
+
+.form__message--success,
+.feedback-form__message--success,
+.login-form__message--success,
+.review-form__message--success {
+  color: $form-success-color;
+}
+
+.form__password,
+.login-form__password {
+  position: relative;
+}
+
+.form__password-toggle,
+.login-form__password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: $form-text-muted;
+  transform: translateY(-50%);
+  transition: color $transition-default;
+
+  &:hover,
+  &:focus-visible {
+    color: $clr-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $clr-primary;
+    outline-offset: 2px;
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .form__field + .form__field,
+  .feedback-form__field + .feedback-form__field,
+  .login-form__field + .login-form__field,
+  .review-form__field + .review-form__field {
+    margin-top: 22px;
+  }
+
+  .form__label,
+  .feedback-form__label,
+  .login-form__label,
+  .review-form__label {
+    font-size: 16px;
+  }
+}
