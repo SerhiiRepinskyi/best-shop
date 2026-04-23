@@ -90,6 +90,75 @@
   gap: 50px 11px;
 }
 
+.catalog__pagination {
+  margin-top: 50px;
+}
+
+.catalog__pagination-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.catalog__pagination-pages {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.catalog__pagination-button,
+.catalog__pagination-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 30px;
+  padding: 6px 10px;
+
+  font-size: 14px;
+  line-height: 1;
+  color: $clr-black;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: transparent;
+  transition:
+    color $transition-default,
+    background-color $transition-default,
+    border-color $transition-default;
+}
+
+.catalog__pagination-button:hover,
+.catalog__pagination-nav:hover {
+  color: $clr-primary;
+  border-color: rgba($clr-primary, 0.45);
+}
+
+.catalog__pagination-button--active {
+  color: $clr-white;
+  background-color: $clr-primary;
+}
+
+.catalog__pagination-button--active:hover {
+  color: $clr-white;
+  border-color: transparent;
+}
+
+.catalog__pagination-nav {
+  min-width: 72px;
+  text-transform: uppercase;
+}
+
+.catalog__pagination-nav:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.catalog__pagination-nav:disabled:hover {
+  color: $clr-black;
+  border-color: transparent;
+}
+
 .catalog__sidebar {
   position: sticky;
   top: 240px;
@@ -137,6 +206,10 @@
     gap: 36px 20px;
   }
 
+  .catalog__pagination {
+    margin-top: 40px;
+  }
+
   .catalog__sidebar {
     position: static;
   }
@@ -177,6 +250,19 @@
   .catalog__products-list {
     gap: 30px;
     justify-items: center;
+  }
+
+  .catalog__pagination {
+    margin-top: 32px;
+  }
+
+  .catalog__pagination-inner {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .catalog__pagination-pages {
+    gap: 8px;
   }
 
   .catalog__sets-list {

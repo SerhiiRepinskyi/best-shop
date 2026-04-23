@@ -27,14 +27,22 @@
 
             <div class="catalog__controls" aria-label="Catalog controls">
               <label class="catalog__control">
-                <span class="catalog__control-label visually-hidden">Sort products</span>
-                <select class="catalog__select" name="sorting" aria-label="Sort products">
+                <span class="catalog__control-label visually-hidden"
+                  >Sort products</span
+                >
+                <select
+                  class="catalog__select"
+                  name="sorting"
+                  aria-label="Sort products"
+                >
                   <option selected>Default Sorting</option>
                 </select>
               </label>
 
               <label class="catalog__control catalog__control--search">
-                <span class="catalog__control-label visually-hidden">Search models</span>
+                <span class="catalog__control-label visually-hidden"
+                  >Search models</span
+                >
                 <input
                   class="catalog__search"
                   type="search"
@@ -49,6 +57,12 @@
           <div class="catalog__layout">
             <div class="catalog__products">
               <ul class="catalog__products-list" data-catalog-products></ul>
+
+              <nav
+                class="catalog__pagination"
+                aria-label="Catalog pagination"
+                data-catalog-pagination
+              ></nav>
             </div>
 
             <aside class="catalog__sidebar" aria-label="Top best sets">
