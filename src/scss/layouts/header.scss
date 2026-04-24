@@ -237,7 +237,7 @@
 .mobile-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba($clr-black, 0.4);
 
   opacity: 0;
   pointer-events: none;

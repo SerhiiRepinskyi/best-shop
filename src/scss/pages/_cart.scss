@@ -1,173 +1,30 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-/*------------ Catalog Cards ------------*/
-.catalog-card {
-  width: 100%;
-  max-width: 296px;
-}
-
-.catalog-card__article {
-  display: flex;
-  flex-direction: column;
-  min-height: 569px;
-}
-
-.catalog-card__media {
+/*------------ Cart Hero ------------*/
+.cart-hero {
   position: relative;
-  display: block;
-  margin-bottom: 24px;
-  overflow: hidden;
-}
-
-.catalog-card__badge {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  z-index: 1;
-  padding: 6px 10px;
-
-  font-weight: $font-weight-bold;
-  font-size: 12px;
-  line-height: 1.2;
-  text-transform: uppercase;
+  min-height: 229px;
   color: $clr-white;
-  background-color: $clr-primary;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    image-set(
+        url("/assets/images/cart/cart-hero.webp") 1x,
+        url("/assets/images/cart/cart-hero@2x.webp") 2x
+      )
+      center / cover no-repeat;
 }
 
-.catalog-card__image {
-  width: 100%;
-  aspect-ratio: 296 / 400;
-  object-fit: cover;
-  transition: transform $transition-default;
-}
-
-.catalog-card__media:hover .catalog-card__image {
-  transform: scale(1.02);
-}
-
-.catalog-card__content {
+.cart-hero__container {
   display: flex;
-  flex: 1;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 229px;
 }
 
-.catalog-card__title {
-  max-width: 240px;
-  margin-bottom: 15px;
-
+.cart-hero__title {
   font-weight: $font-weight-bold;
-  font-size: 19px;
-  color: $clr-black;
+  font-size: clamp(40px, 5vw, 50px);
+  color: $clr-white;
   text-align: center;
-}
-
-.catalog-card__title-link {
-  transition: color $transition-default;
-}
-
-.catalog-card__title-link:hover {
-  color: $clr-primary;
-}
-
-.catalog-card__price {
-  margin-bottom: 16px;
-
-  font-weight: $font-weight-bold;
-  font-size: 19px;
-  line-height: 1.2;
-  color: $clr-text-secondary;
-}
-
-.catalog-card__button {
-  margin-top: auto;
-  min-width: 156px;
-  text-transform: capitalize;
-}
-
-.catalog-set-card__article {
-  display: grid;
-  grid-template-columns: 87px minmax(0, 1fr);
-  gap: 20px;
-  align-items: start;
-}
-
-.catalog-set-card__media {
-  display: block;
-  overflow: hidden;
-}
-
-.catalog-set-card__image {
-  width: 87px;
-  height: 87px;
-  object-fit: cover;
-}
-
-.catalog-set-card__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.catalog-set-card__title {
-  margin-bottom: 9px;
-
-  line-height: 1.3;
-  font-weight: 400;
-  font-size: 15px;
-  color: $clr-black;
-}
-
-.catalog-set-card__rating {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 7px;
-}
-
-.catalog-set-card__star {
-  font-size: 15px;
-  line-height: 1;
-  color: rgba($clr-black, 0.2);
-}
-
-.catalog-set-card__star--filled {
-  color: #f5b423;
-}
-
-.catalog-set-card__price {
-  font-size: 15px;
-  line-height: 1.2;
-  color: $clr-black;
-}
-
-/*------------ Adaptivity Catalog Cards ------------*/
-@include respond(tablet) {
-  .catalog-card {
-    max-width: none;
-  }
-
-  .catalog-card__article {
-    min-height: auto;
-  }
-}
-
-@include respond(mobile) {
-  .catalog-card {
-    max-width: 340px;
-  }
-
-  .catalog-card__media {
-    margin-bottom: 14px;
-  }
-
-  .catalog-card__title {
-    margin-bottom: 12px;
-    font-size: 16px;
-  }
-
-  .catalog-card__price {
-    margin-bottom: 12px;
-    font-size: 16px;
-  }
 }

@@ -1,18 +1,6 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 /*------------ Catalog ------------*/
 .catalog__container {
   display: flex;
@@ -96,8 +84,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   color: $clr-text-secondary;
   transform: translateY(-50%);
@@ -133,8 +121,8 @@
 }
 
 .catalog__search-clear svg {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
 }
 
 .catalog__search-button svg {
@@ -262,7 +250,7 @@
 .catalog-popup__overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba($clr-black, 0.45);
+  background-color: rgba($clr-black, 0.4);
 }
 
 .catalog-popup__dialog {
@@ -280,9 +268,7 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  font-size: 28px;
-  line-height: 1;
-  color: rgba($clr-black, 0.6);
+  color: $clr-black;
   transition: color $transition-default;
 }
 
