@@ -9,6 +9,7 @@ export default defineConfig({
         about: "html/about.html",
         contact: "html/contact.html",
         cart: "html/cart.html",
+        product: "html/product.html",
       },
     },
   },

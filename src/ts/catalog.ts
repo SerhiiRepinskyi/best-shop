@@ -13,6 +13,21 @@ type CatalogResponse = {
   data: CatalogItem[];
 };
 
+type SortValue =
+  | "default"
+  | "price-asc"
+  | "price-desc"
+  | "popularity-desc"
+  | "rating-desc";
+
+type CatalogState = {
+  allProductItems: CatalogItem[];
+  visibleProductItems: CatalogItem[];
+  currentPage: number;
+  currentSort: SortValue;
+  currentSearchQuery: string;
+};
+
 const DATA_URL = "/assets/data.json";
 const SETS_CATEGORY = "luggage sets";
 const PRODUCTS_PER_PAGE = 12;
@@ -38,10 +53,16 @@ function createRatingStars(rating: number): string {
 }
 
 function createProductCardMarkup(item: CatalogItem): string {
+  const productUrl = getProductDetailsUrl(item.id);
+
   return `
     <li class="catalog-card">
       <article class="catalog-card__article">
-        <div class="catalog-card__media" aria-label="${item.name}">
+        <a
+          class="catalog-card__media catalog-card__product-link"
+          href="${productUrl}"
+          aria-label="${item.name}"
+        >
           ${
             item.salesStatus
               ? '<span class="catalog-card__badge">Sale</span>'
@@ -55,10 +76,14 @@ function createProductCardMarkup(item: CatalogItem): string {
             height="400"
             loading="lazy"
           />
-        </div>
+        </a>
 
         <div class="catalog-card__content">
-          <h3 class="catalog-card__title">${truncateText(item.name, 42)}</h3>
+          <h3 class="catalog-card__title">
+            <a class="catalog-card__title-link" href="${productUrl}">
+              ${truncateText(item.name, 42)}
+            </a>
+          </h3>
           <p class="catalog-card__price">$${item.price}</p>
           <button
             class="btn catalog-card__button"
@@ -112,6 +137,41 @@ async function getCatalogData(): Promise<CatalogItem[]> {
 
   const payload: CatalogResponse = await response.json();
   return payload.data;
+}
+
+function sortItems(items: CatalogItem[], sortValue: SortValue): CatalogItem[] {
+  const nextItems = [...items];
+
+  switch (sortValue) {
+    case "price-asc":
+      return nextItems.sort((first, second) => first.price - second.price);
+    case "price-desc":
+      return nextItems.sort((first, second) => second.price - first.price);
+    case "popularity-desc":
+      return nextItems.sort(
+        (first, second) => second.popularity - first.popularity,
+      );
+    case "rating-desc":
+      return nextItems.sort((first, second) => second.rating - first.rating);
+    case "default":
+    default:
+      return nextItems;
+  }
+}
+
+function filterItemsBySearch(
+  items: CatalogItem[],
+  searchQuery: string,
+): CatalogItem[] {
+  if (!searchQuery) {
+    return [...items];
+  }
+
+  const normalizedQuery = searchQuery.toLowerCase();
+
+  return items.filter((item) =>
+    item.name.toLowerCase().includes(normalizedQuery),
+  );
 }
 
 function getPageItems(
@@ -208,6 +268,29 @@ function scrollToCatalogSection(element: HTMLElement): void {
   });
 }
 
+function showPopup(popup: HTMLElement): void {
+  popup.hidden = false;
+  document.body.classList.add("no-scroll");
+}
+
+function hidePopup(popup: HTMLElement): void {
+  popup.hidden = true;
+  document.body.classList.remove("no-scroll");
+}
+
+function applyState(state: CatalogState): CatalogItem[] {
+  const filteredItems = filterItemsBySearch(
+    state.allProductItems,
+    state.currentSearchQuery,
+  );
+
+  return sortItems(filteredItems, state.currentSort);
+}
+
+function getProductDetailsUrl(productId: string): string {
+  return `/html/product.html?id=${encodeURIComponent(productId)}`;
+}
+
 export async function initCatalogPage(): Promise<void> {
   const productsList = document.querySelector<HTMLElement>(
     "[data-catalog-products]",
@@ -220,13 +303,34 @@ export async function initCatalogPage(): Promise<void> {
   const pagination = document.querySelector<HTMLElement>(
     "[data-catalog-pagination]",
   );
+  const sortSelect = document.querySelector<HTMLSelectElement>(
+    "[data-catalog-sort]",
+  );
+  const searchForm = document.querySelector<HTMLFormElement>(
+    "[data-catalog-search-form]",
+  );
+  const searchInput = document.querySelector<HTMLInputElement>(
+    "[data-catalog-search]",
+  );
+  const searchClearButton = document.querySelector<HTMLButtonElement>(
+    "[data-catalog-search-clear]",
+  );
+  const popup = document.querySelector<HTMLElement>("[data-catalog-popup]");
+  const popupCloseControls = document.querySelectorAll<HTMLElement>(
+    "[data-catalog-popup-close]",
+  );
 
   if (
     !productsList ||
     !setsList ||
     !resultsCounter ||
     !catalogTop ||
-    !pagination
+    !pagination ||
+    !sortSelect ||
+    !searchForm ||
+    !searchInput ||
+    !searchClearButton ||
+    !popup
   ) {
     return;
   }
@@ -239,34 +343,107 @@ export async function initCatalogPage(): Promise<void> {
     const setItems = items
       .filter((item) => item.category === SETS_CATEGORY)
       .sort((first, second) => second.popularity - first.popularity);
-    let currentPage = 1;
 
-    const renderProductsPage = (page: number, shouldScroll = false): void => {
-      const totalPages = Math.ceil(productItems.length / PRODUCTS_PER_PAGE);
-      const nextPage = Math.min(Math.max(page, 1), Math.max(totalPages, 1));
+    const state: CatalogState = {
+      allProductItems: productItems,
+      visibleProductItems: productItems,
+      currentPage: 1,
+      currentSort: "default",
+      currentSearchQuery: "",
+    };
 
-      if (nextPage === currentPage && shouldScroll) {
-        scrollToCatalogSection(catalogTop);
-        return;
-      }
+    const updateSearchClearButton = (): void => {
+      searchClearButton.hidden = searchInput.value.trim() === "";
+    };
 
-      currentPage = nextPage;
+    const renderProductsPage = (shouldScroll = false): void => {
+      const totalPages = Math.ceil(
+        state.visibleProductItems.length / PRODUCTS_PER_PAGE,
+      );
 
-      const pagedItems = getPageItems(productItems, currentPage);
+      state.currentPage = Math.min(
+        Math.max(state.currentPage, 1),
+        Math.max(totalPages, 1),
+      );
+
+      const pagedItems = getPageItems(
+        state.visibleProductItems,
+        state.currentPage,
+      );
+
       productsList.innerHTML = pagedItems.map(createProductCardMarkup).join("");
       pagination.innerHTML = createPaginationMarkup(
-        productItems.length,
-        currentPage,
+        state.visibleProductItems.length,
+        state.currentPage,
       );
-      updateResultsCounter(resultsCounter, productItems.length, currentPage);
+      updateResultsCounter(
+        resultsCounter,
+        state.visibleProductItems.length,
+        state.currentPage,
+      );
 
       if (shouldScroll) {
         scrollToCatalogSection(catalogTop);
       }
     };
 
+    const updateVisibleItems = (shouldScroll = false): void => {
+      state.visibleProductItems = applyState(state);
+      state.currentPage = 1;
+      renderProductsPage(shouldScroll);
+    };
+
     setsList.innerHTML = setItems.map(createSetCardMarkup).join("");
-    renderProductsPage(currentPage);
+    renderProductsPage();
+    updateSearchClearButton();
+
+    sortSelect.addEventListener("change", () => {
+      state.currentSort = sortSelect.value as SortValue;
+      updateVisibleItems();
+    });
+
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const nextQuery = searchInput.value.trim();
+
+      if (!nextQuery) {
+        hidePopup(popup);
+        state.currentSearchQuery = "";
+        updateVisibleItems();
+        return;
+      }
+
+      const matchedItems = filterItemsBySearch(state.allProductItems, nextQuery);
+
+      if (matchedItems.length === 0) {
+        showPopup(popup);
+        return;
+      }
+
+      state.currentSearchQuery = nextQuery;
+      hidePopup(popup);
+      updateVisibleItems();
+    });
+
+    searchInput.addEventListener("input", () => {
+      updateSearchClearButton();
+
+      if (searchInput.value.trim() === "" && state.currentSearchQuery !== "") {
+        hidePopup(popup);
+        state.currentSearchQuery = "";
+        updateVisibleItems();
+      }
+    });
+
+    searchClearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      hidePopup(popup);
+      state.currentSearchQuery = "";
+      updateSearchClearButton();
+      updateVisibleItems();
+      searchInput.focus();
+    });
 
     pagination.addEventListener("click", (event) => {
       const target = event.target;
@@ -276,17 +453,30 @@ export async function initCatalogPage(): Promise<void> {
       }
 
       if (target.dataset.page) {
-        renderProductsPage(Number(target.dataset.page), true);
+        state.currentPage = Number(target.dataset.page);
+        renderProductsPage(true);
         return;
       }
 
       if (target.dataset.pageNav === "prev") {
-        renderProductsPage(currentPage - 1, true);
+        state.currentPage -= 1;
+        renderProductsPage(true);
         return;
       }
 
       if (target.dataset.pageNav === "next") {
-        renderProductsPage(currentPage + 1, true);
+        state.currentPage += 1;
+        renderProductsPage(true);
+      }
+    });
+
+    popupCloseControls.forEach((control) => {
+      control.addEventListener("click", () => hidePopup(popup));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !popup.hidden) {
+        hidePopup(popup);
       }
     });
   } catch (error) {

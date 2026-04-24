@@ -63,6 +63,14 @@
   text-align: center;
 }
 
+.catalog-card__title-link {
+  transition: color $transition-default;
+}
+
+.catalog-card__title-link:hover {
+  color: $clr-primary;
+}
+
 .catalog-card__price {
   margin-bottom: 16px;
 
