@@ -1,0 +1,120 @@
+<div class="login-modal" data-login-modal hidden>
+  <div class="login-modal__overlay" data-login-close></div>
+
+  <div
+    class="login-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="login-modal-title"
+  >
+    <button
+      class="login-modal__close"
+      type="button"
+      aria-label="Close login modal"
+      data-login-close
+    >
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M23.734 10.304l-1.504-1.504-5.963 5.962-5.962-5.962-1.504 1.504 5.962 5.962-5.962 5.963 1.504 1.504 5.962-5.963 5.963 5.963 1.504-1.504-5.963-5.963 5.963-5.962z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </button>
+
+    <h2 class="login-modal__title" id="login-modal-title">Account Log In</h2>
+
+    <form class="form login-form" action="#" method="post" novalidate>
+      <div class="form__field login-form__field">
+        <label class="form__label login-form__label" for="login-email">
+          Email address <span class="form__required">*</span>
+        </label>
+        <input
+          class="form__input login-form__input"
+          type="email"
+          id="login-email"
+          name="email"
+          autocomplete="email"
+          aria-describedby="login-email-error"
+          required
+        />
+        <p
+          class="form__message form__message--error login-form__error"
+          id="login-email-error"
+          hidden
+        ></p>
+      </div>
+
+      <div class="form__field login-form__field">
+        <label class="form__label login-form__label" for="login-password">
+          Password <span class="form__required">*</span>
+        </label>
+
+        <div class="form__password login-form__password">
+          <input
+            class="form__input login-form__input"
+            type="password"
+            id="login-password"
+            name="password"
+            autocomplete="current-password"
+            aria-describedby="login-password-error"
+            required
+          />
+
+          <button
+            class="form__password-toggle login-form__password-toggle"
+            type="button"
+            aria-label="Show password"
+            data-password-toggle
+          >
+            <svg
+              width="34"
+              height="24"
+              viewBox="0 0 34 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M17 4C9.5 4 3.6 8.5 1 12C3.6 15.5 9.5 20 17 20C24.5 20 30.4 15.5 33 12C30.4 8.5 24.5 4 17 4ZM17 17C14.2 17 12 14.8 12 12C12 9.2 14.2 7 17 7C19.8 7 22 9.2 22 12C22 14.8 19.8 17 17 17ZM17 9C15.3 9 14 10.3 14 12C14 13.7 15.3 15 17 15C18.7 15 20 13.7 20 12C20 10.3 18.7 9 17 9Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <p
+          class="form__message form__message--error login-form__error"
+          id="login-password-error"
+          hidden
+        ></p>
+      </div>
+
+      <div class="login-form__options">
+        <label class="login-form__checkbox">
+          <input
+            class="login-form__checkbox-input"
+            type="checkbox"
+            name="remember"
+          />
+          <span class="login-form__checkbox-box"></span>
+          <span class="login-form__checkbox-label">Remember me</span>
+        </label>
+
+        <a href="#" class="login-form__forgot-link">Forgot Your Password?</a>
+      </div>
+
+      <button class="btn btn--lg login-form__submit" type="submit">
+        Log In
+      </button>
+
+      <p class="form__message login-form__status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</div>

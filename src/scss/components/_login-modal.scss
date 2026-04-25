@@ -1,0 +1,234 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.login-modal {
+  position: fixed;
+  inset: 0;
+  z-index: $z-header + 20;
+}
+
+.login-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba($clr-black, 0.42);
+  backdrop-filter: blur(2px);
+}
+
+.login-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 32px, 640px);
+  margin: 10vh auto 0;
+  padding: 60px 70px 50px;
+  background-color: $clr-white;
+  box-shadow: 0 24px 60px rgba($clr-black, 0.18);
+}
+
+.login-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba($clr-black, 0.55);
+  transition: color $transition-default;
+
+  &:hover,
+  &:focus-visible {
+    color: $clr-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $clr-primary;
+    outline-offset: 2px;
+  }
+}
+
+.login-modal__title {
+  margin-bottom: 42px;
+
+  font-weight: $font-weight-bold;
+  font-size: 24px;
+  line-height: 1.2;
+  color: $clr-black;
+}
+
+.login-form__field + .login-form__field {
+  margin-top: 30px;
+}
+
+.login-form__input {
+  min-height: 64px;
+  padding: 16px 18px;
+}
+
+.login-form__password .login-form__input {
+  padding-right: 60px;
+}
+
+.login-form__password-toggle {
+  right: 18px;
+  width: 28px;
+  height: 28px;
+  color: rgba($clr-black, 0.5);
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.login-form__options {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 34px;
+}
+
+.login-form__checkbox {
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.login-form__checkbox-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.login-form__checkbox-box {
+  position: relative;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba($clr-black, 0.25);
+  background-color: $clr-white;
+  transition:
+    border-color $transition-default,
+    background-color $transition-default;
+}
+
+.login-form__checkbox-input:checked + .login-form__checkbox-box {
+  border-color: $clr-primary;
+  background-color: $clr-primary;
+}
+
+.login-form__checkbox-input:checked + .login-form__checkbox-box::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  width: 6px;
+  height: 12px;
+  border-right: 2px solid $clr-white;
+  border-bottom: 2px solid $clr-white;
+  transform: rotate(40deg);
+}
+
+.login-form__checkbox-input:focus-visible + .login-form__checkbox-box {
+  outline: 2px solid $clr-primary;
+  outline-offset: 2px;
+}
+
+.login-form__checkbox-label {
+  font-size: 17px;
+  color: rgba($clr-black, 0.6);
+}
+
+.login-form__forgot-link {
+  font-weight: $font-weight-bold;
+  font-size: 17px;
+  color: $clr-primary;
+  transition: opacity $transition-default;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.9;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $clr-primary;
+    outline-offset: 2px;
+  }
+}
+
+.login-form__submit {
+  width: 100%;
+  margin-top: 42px;
+  text-transform: uppercase;
+}
+
+.login-form__status {
+  margin-top: 16px;
+}
+
+@include respond(tablet) {
+  .login-modal__dialog {
+    width: min(100% - 24px, 560px);
+    padding: 48px 40px 40px;
+  }
+
+  .login-modal__title {
+    margin-bottom: 32px;
+  }
+
+  .login-form__input {
+    min-height: 56px;
+  }
+}
+
+@include respond(mobile) {
+  .login-modal__dialog {
+    width: min(100% - 20px, 420px);
+    margin-top: 8vh;
+    padding: 40px 20px 28px;
+  }
+
+  .login-modal__close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .login-modal__title {
+    margin-bottom: 24px;
+    font-size: 22px;
+  }
+
+  .login-form__field + .login-form__field {
+    margin-top: 22px;
+  }
+
+  .login-form__input {
+    min-height: 50px;
+    padding: 12px 14px;
+  }
+
+  .login-form__password .login-form__input {
+    padding-right: 48px;
+  }
+
+  .login-form__password-toggle {
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .login-form__options {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 26px;
+  }
+
+  .login-form__checkbox-label,
+  .login-form__forgot-link {
+    font-size: 16px;
+  }
+
+  .login-form__submit {
+    margin-top: 32px;
+  }
+}
