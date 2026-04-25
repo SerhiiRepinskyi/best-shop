@@ -76,6 +76,7 @@
 
 .account-btn,
 .cart-btn {
+  position: relative;
   color: $clr-black;
   transition: $transition-default;
 }
@@ -84,6 +85,29 @@
 .cart-btn:hover {
   color: $clr-primary;
   transform: scale(1.1);
+}
+
+.cart-count {
+  position: absolute;
+  top: -9px;
+  right: -8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  font-weight: $font-weight-bold;
+  font-size: 12px;
+  line-height: 1;
+  color: $clr-primary;
+  border-radius: 999px;
+  border: solid 2px $clr-primary;
+}
+
+.cart-count[hidden] {
+  display: none !important;
 }
 
 /*------------ Navigation ------------*/

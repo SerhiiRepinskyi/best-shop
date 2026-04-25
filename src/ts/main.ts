@@ -2,6 +2,7 @@ import { loadComponent } from "./utils/loadComponent";
 import { setActiveLink } from "./utils/setActiveLink";
 import { initMobileMenu } from "./components/mobileMenu";
 import { initLoginModal } from "./components/loginModal";
+import { initCartCounter } from "./components/cartCounter";
 import { initContactForm } from "./contact";
 import { initCatalogPage } from "./catalog";
 
@@ -17,6 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initMobileMenu();
 
   initLoginModal();
+
+  initCartCounter();
 
   initContactForm();
 

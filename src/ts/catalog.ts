@@ -1,9 +1,15 @@
+import { LOGIN_MODAL_OPEN_EVENT } from "./components/loginModal";
+import { isUserLoggedIn } from "./utils/auth";
+import { addToCart } from "./utils/cart";
+
 type CatalogItem = {
   id: string;
   name: string;
   price: number;
   imageUrl: string;
   category: string;
+  color: string;
+  size: string;
   salesStatus: boolean;
   rating: number;
   popularity: number;
@@ -291,6 +297,10 @@ function getProductDetailsUrl(productId: string): string {
   return `/html/product.html?id=${encodeURIComponent(productId)}`;
 }
 
+function requestLoginModalOpen(): void {
+  document.dispatchEvent(new CustomEvent(LOGIN_MODAL_OPEN_EVENT));
+}
+
 export async function initCatalogPage(): Promise<void> {
   const productsList = document.querySelector<HTMLElement>(
     "[data-catalog-products]",
@@ -343,6 +353,9 @@ export async function initCatalogPage(): Promise<void> {
     const setItems = items
       .filter((item) => item.category === SETS_CATEGORY)
       .sort((first, second) => second.popularity - first.popularity);
+    const productItemsMap = new Map(
+      productItems.map((item) => [item.id, item] as const),
+    );
 
     const state: CatalogState = {
       allProductItems: productItems,
@@ -468,6 +481,46 @@ export async function initCatalogPage(): Promise<void> {
         state.currentPage += 1;
         renderProductsPage(true);
       }
+    });
+
+    productsList.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
+
+      const addToCartButton = target.closest<HTMLButtonElement>("[data-product-id]");
+
+      if (!addToCartButton) {
+        return;
+      }
+
+      const productId = addToCartButton.dataset.productId;
+
+      if (!productId) {
+        return;
+      }
+
+      if (!isUserLoggedIn()) {
+        requestLoginModalOpen();
+        return;
+      }
+
+      const product = productItemsMap.get(productId);
+
+      if (!product) {
+        return;
+      }
+
+      addToCart({
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        color: product.color,
+        size: product.size,
+      });
     });
 
     popupCloseControls.forEach((control) => {

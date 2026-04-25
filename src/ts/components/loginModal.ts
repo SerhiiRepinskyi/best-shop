@@ -5,6 +5,8 @@ import {
 import { loginUser } from "../utils/auth";
 import { isRequired, isValidEmail } from "../utils/validation";
 
+export const LOGIN_MODAL_OPEN_EVENT = "login-modal:open";
+
 function getFieldConfig(
   form: HTMLFormElement,
   name: "email" | "password",
@@ -119,6 +121,8 @@ export function initLoginModal(): void {
   });
 
   openButton.addEventListener("click", openModal);
+
+  document.addEventListener(LOGIN_MODAL_OPEN_EVENT, openModal);
 
   closeControls.forEach((control) => {
     control.addEventListener("click", closeModal);
