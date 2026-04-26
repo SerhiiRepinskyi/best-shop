@@ -3,6 +3,7 @@ import { setActiveLink } from "./utils/setActiveLink";
 import { initMobileMenu } from "./components/mobileMenu";
 import { initLoginModal } from "./components/loginModal";
 import { initCartCounter } from "./components/cartCounter";
+import { initCartPage } from "./cart";
 import { initContactForm } from "./contact";
 import { initCatalogPage } from "./catalog";
 
@@ -14,14 +15,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   ]);
 
   setActiveLink();
-
   initMobileMenu();
-
   initLoginModal();
-
   initCartCounter();
-
+  initCartPage();
   initContactForm();
-
   await initCatalogPage();
 });

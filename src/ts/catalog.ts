@@ -1,6 +1,7 @@
 import { LOGIN_MODAL_OPEN_EVENT } from "./components/loginModal";
 import { isUserLoggedIn } from "./utils/auth";
 import { addToCart } from "./utils/cart";
+import { getProductData } from "./utils/productData";
 
 type CatalogItem = {
   id: string;
@@ -13,10 +14,6 @@ type CatalogItem = {
   salesStatus: boolean;
   rating: number;
   popularity: number;
-};
-
-type CatalogResponse = {
-  data: CatalogItem[];
 };
 
 type SortValue =
@@ -34,7 +31,6 @@ type CatalogState = {
   currentSearchQuery: string;
 };
 
-const DATA_URL = "/assets/data.json";
 const SETS_CATEGORY = "luggage sets";
 const PRODUCTS_PER_PAGE = 12;
 
@@ -132,17 +128,6 @@ function createSetCardMarkup(item: CatalogItem): string {
       </article>
     </li>
   `;
-}
-
-async function getCatalogData(): Promise<CatalogItem[]> {
-  const response = await fetch(DATA_URL);
-
-  if (!response.ok) {
-    throw new Error("Failed to load catalog data.");
-  }
-
-  const payload: CatalogResponse = await response.json();
-  return payload.data;
 }
 
 function sortItems(items: CatalogItem[], sortValue: SortValue): CatalogItem[] {
@@ -346,7 +331,7 @@ export async function initCatalogPage(): Promise<void> {
   }
 
   try {
-    const items = await getCatalogData();
+    const items = await getProductData();
     const productItems = items.filter(
       (item) => item.category !== SETS_CATEGORY,
     );

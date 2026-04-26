@@ -17,11 +17,13 @@ type AddToCartPayload = Omit<CartItem, "quantity"> & {
   quantity?: number;
 };
 
+type CartItemIdentity = Pick<CartItem, "productId" | "color" | "size">;
+
 function emitCartUpdated(): void {
   document.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT));
 }
 
-function createCartItemKey(item: Pick<CartItem, "productId" | "color" | "size">): string {
+function createCartItemKey(item: CartItemIdentity): string {
   return `${item.productId}::${item.color}::${item.size}`;
 }
 
@@ -73,4 +75,44 @@ export function getCartItemsCount(): number {
   return getCartItems().reduce((total, item) => total + item.quantity, 0);
 }
 
-export type { CartItem, AddToCartPayload };
+export function updateCartItemQuantity(
+  identity: CartItemIdentity,
+  quantity: number,
+): CartItem[] {
+  const nextQuantity = Math.max(quantity, 1);
+  const nextItems = getCartItems().map((item) => {
+    if (createCartItemKey(item) !== createCartItemKey(identity)) {
+      return item;
+    }
+
+    return {
+      ...item,
+      quantity: nextQuantity,
+    };
+  });
+
+  setCartItems(nextItems);
+  return nextItems;
+}
+
+export function removeCartItem(identity: CartItemIdentity): CartItem[] {
+  const nextItems = getCartItems().filter(
+    (item) => createCartItemKey(item) !== createCartItemKey(identity),
+  );
+
+  setCartItems(nextItems);
+  return nextItems;
+}
+
+export function clearCart(): void {
+  setCartItems([]);
+}
+
+export function getCartSubtotal(): number {
+  return getCartItems().reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+}
+
+export type { CartItem, AddToCartPayload, CartItemIdentity };
