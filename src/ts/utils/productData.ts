@@ -11,6 +11,7 @@ type ProductDataItem = {
   salesStatus: boolean;
   rating: number;
   popularity: number;
+  blocks: string[];
 };
 
 type ProductDataResponse = {

@@ -1,20 +1,11 @@
 import { LOGIN_MODAL_OPEN_EVENT } from "./components/loginModal";
+import { createProductCardMarkup, truncateText } from "./components/productCards";
+import { createSetCardMarkup } from "./components/setCards";
 import { isUserLoggedIn } from "./utils/auth";
 import { addToCart } from "./utils/cart";
-import { getProductData } from "./utils/productData";
+import { getProductData, type ProductDataItem } from "./utils/productData";
 
-type CatalogItem = {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
-  category: string;
-  color: string;
-  size: string;
-  salesStatus: boolean;
-  rating: number;
-  popularity: number;
-};
+type CatalogItem = ProductDataItem;
 
 type SortValue =
   | "default"
@@ -33,102 +24,6 @@ type CatalogState = {
 
 const SETS_CATEGORY = "luggage sets";
 const PRODUCTS_PER_PAGE = 12;
-
-function truncateText(text: string, maxLength: number): string {
-  if (text.length <= maxLength) {
-    return text;
-  }
-
-  return `${text.slice(0, maxLength).replace(/\s+$/, "")}...`;
-}
-
-function createRatingStars(rating: number): string {
-  const filledStars = Math.round(rating);
-
-  return Array.from(
-    { length: 5 },
-    (_, index) =>
-      `<span class="catalog-set-card__star${
-        index < filledStars ? " catalog-set-card__star--filled" : ""
-      }">&#9733;</span>`,
-  ).join("");
-}
-
-function createProductCardMarkup(item: CatalogItem): string {
-  const productUrl = getProductDetailsUrl(item.id);
-
-  return `
-    <li class="catalog-card">
-      <article class="catalog-card__article">
-        <a
-          class="catalog-card__media catalog-card__product-link"
-          href="${productUrl}"
-          aria-label="${item.name}"
-        >
-          ${
-            item.salesStatus
-              ? '<span class="catalog-card__badge">Sale</span>'
-              : ""
-          }
-          <img
-            class="catalog-card__image"
-            src="${item.imageUrl}"
-            alt="${item.name}"
-            width="296"
-            height="400"
-            loading="lazy"
-          />
-        </a>
-
-        <div class="catalog-card__content">
-          <h3 class="catalog-card__title">
-            <a class="catalog-card__title-link" href="${productUrl}">
-              ${truncateText(item.name, 42)}
-            </a>
-          </h3>
-          <p class="catalog-card__price">$${item.price}</p>
-          <button
-            class="btn catalog-card__button"
-            type="button"
-            data-product-id="${item.id}"
-          >
-            Add To Cart
-          </button>
-        </div>
-      </article>
-    </li>
-  `;
-}
-
-function createSetCardMarkup(item: CatalogItem): string {
-  return `
-    <li class="catalog-set-card">
-      <article class="catalog-set-card__article">
-        <div class="catalog-set-card__media" aria-label="${item.name}">
-          <img
-            class="catalog-set-card__image"
-            src="${item.imageUrl}"
-            alt="${item.name}"
-            width="87"
-            height="87"
-            loading="lazy"
-          />
-        </div>
-
-        <div class="catalog-set-card__content">
-          <h3 class="catalog-set-card__title">${truncateText(item.name, 34)}</h3>
-          <div
-            class="catalog-set-card__rating"
-            aria-label="Rating ${item.rating} out of 5"
-          >
-            ${createRatingStars(item.rating)}
-          </div>
-          <p class="catalog-set-card__price">$${item.price}</p>
-        </div>
-      </article>
-    </li>
-  `;
-}
 
 function sortItems(items: CatalogItem[], sortValue: SortValue): CatalogItem[] {
   const nextItems = [...items];
@@ -278,10 +173,6 @@ function applyState(state: CatalogState): CatalogItem[] {
   return sortItems(filteredItems, state.currentSort);
 }
 
-function getProductDetailsUrl(productId: string): string {
-  return `/html/product.html?id=${encodeURIComponent(productId)}`;
-}
-
 function requestLoginModalOpen(): void {
   document.dispatchEvent(new CustomEvent(LOGIN_MODAL_OPEN_EVENT));
 }
@@ -391,7 +282,14 @@ export async function initCatalogPage(): Promise<void> {
       renderProductsPage(shouldScroll);
     };
 
-    setsList.innerHTML = setItems.map(createSetCardMarkup).join("");
+    setsList.innerHTML = setItems
+      .map((item) =>
+        createSetCardMarkup({
+          ...item,
+          name: truncateText(item.name, 34),
+        }),
+      )
+      .join("");
     renderProductsPage();
     updateSearchClearButton();
 

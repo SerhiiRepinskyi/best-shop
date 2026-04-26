@@ -6,6 +6,7 @@ import { initCartCounter } from "./components/cartCounter";
 import { initCartPage } from "./cart";
 import { initContactForm } from "./contact";
 import { initCatalogPage } from "./catalog";
+import { initProductPage } from "./product";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await Promise.all([
@@ -21,4 +22,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   initCartPage();
   initContactForm();
   await initCatalogPage();
+  await initProductPage();
 });
