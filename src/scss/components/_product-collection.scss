@@ -1,0 +1,103 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+/*------------ Product Collection ------------*/
+.product-collection {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-collection__title {
+  position: relative;
+  align-self: center;
+
+  font-weight: $font-weight-bold;
+  font-size: clamp(26px, 4vw, 30px);
+  line-height: 1.2;
+  color: $clr-black;
+  text-align: center;
+}
+
+.product-collection__title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+
+  width: 282px;
+  max-width: 100%;
+  height: 2px;
+  background-color: $clr-primary;
+}
+
+.product-collection__subtitle {
+  margin-bottom: 60px;
+
+  font-size: 17px;
+  color: $clr-text-secondary;
+  text-align: center;
+}
+
+.product-collection__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 39px;
+  justify-items: center;
+}
+
+.product-collection__empty {
+  grid-column: 1 / -1;
+  font-size: 17px;
+  line-height: 1.5;
+  color: $clr-text-secondary;
+  text-align: center;
+}
+
+.product-collection--featured .product-collection__title {
+  margin-bottom: 10px;
+}
+
+.product-collection--featured .product-collection__title::after {
+  content: none;
+}
+
+.product-collection--product .product-collection__title {
+  margin-bottom: 70px;
+}
+
+/*------------ Adaptivity ------------*/
+@include respond(tablet) {
+  .product-collection__subtitle {
+    margin-bottom: 40px;
+  }
+
+  .product-collection__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 20px;
+  }
+
+  .product-collection--product .product-collection__title {
+    margin-bottom: 48px;
+  }
+}
+
+@include respond(mobile) {
+  .product-collection__subtitle {
+    margin-bottom: 32px;
+  }
+
+  .product-collection__list {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .product-collection--product .product-collection__title {
+    margin-bottom: 40px;
+  }
+
+  .product-collection--product .product-collection__title::after {
+    width: 274px;
+    bottom: -10px;
+  }
+}
