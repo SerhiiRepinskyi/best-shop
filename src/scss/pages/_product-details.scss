@@ -1,2 +1,20 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
+
+// Component styles live in components/_product-details-content.scss.
+
+.product-details__container {
+  padding-top: 60px;
+}
+
+@include respond(tablet) {
+  .product-details__container {
+    padding-top: 50px;
+  }
+}
+
+@include respond(mobile) {
+  .product-details__container {
+    padding-top: 40px;
+  }
+}
