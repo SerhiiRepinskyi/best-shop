@@ -1,7 +1,7 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-/*------------ Product Details ------------*/
+/*------------ Product Details Content ------------*/
 .product-details__content {
   display: grid;
   grid-template-columns: minmax(320px, 645px) minmax(320px, 1fr);

@@ -3,10 +3,12 @@
 
 // Component styles live in components/_product-details-content.scss.
 
+/*------------ Product Details ------------*/
 .product-details__container {
   padding-top: 60px;
 }
 
+/*------------ Adaptivity Product Details ------------*/
 @include respond(tablet) {
   .product-details__container {
     padding-top: 50px;
@@ -16,5 +18,90 @@
 @include respond(mobile) {
   .product-details__container {
     padding-top: 40px;
+  }
+}
+
+/*------------ Product Tabs ------------*/
+.product-tabs__inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-tabs__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 120px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 39px;
+}
+
+.product-tabs__tab {
+  position: relative;
+
+  font-size: 17px;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  color: $clr-black;
+  transition: color $transition-default;
+
+  &:hover,
+  &:focus-visible {
+    color: $clr-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $clr-primary;
+    outline-offset: 3px;
+  }
+}
+
+.product-tabs__tab--active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -9px;
+  left: 0;
+
+  height: 2px;
+  background-color: $clr-primary;
+}
+
+.product-tabs__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+
+  p {
+    font-size: 17px;
+    color: $clr-text-secondary;
+  }
+}
+
+/*------------ Adaptivity Product Tabs ------------*/
+@include respond(tablet) {
+  .product-tabs__nav {
+    gap: 64px;
+    margin-bottom: 36px;
+  }
+}
+
+@include respond(mobile) {
+  .product-tabs__nav {
+    gap: 18px 36px;
+    justify-content: flex-start;
+    margin-bottom: 28px;
+  }
+
+  .product-tabs__tab {
+    font-size: 15px;
+  }
+
+  .product-tabs__panel {
+    gap: 20px;
+
+    p {
+      font-size: 16px;
+    }
   }
 }

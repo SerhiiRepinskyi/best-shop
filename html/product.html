@@ -21,6 +21,88 @@
         <div class="container product-details__container" data-product-details></div>
       </section>
 
+      <section class="product-tabs">
+        <div class="container product-tabs__container">
+          <div class="product-tabs__inner" data-product-tabs>
+            <div
+              class="product-tabs__nav"
+              role="tablist"
+              aria-label="Product information tabs"
+            >
+              <button
+                class="product-tabs__tab product-tabs__tab--active"
+                type="button"
+                role="tab"
+                id="product-tab-details"
+                aria-selected="true"
+                aria-controls="product-panel-details"
+                data-product-tab="details"
+              >
+                Details
+              </button>
+              <button
+                class="product-tabs__tab"
+                type="button"
+                role="tab"
+                id="product-tab-reviews"
+                aria-selected="false"
+                aria-controls="product-panel-details"
+                data-product-tab="reviews"
+              >
+                Reviews
+              </button>
+              <button
+                class="product-tabs__tab"
+                type="button"
+                role="tab"
+                id="product-tab-shipping"
+                aria-selected="false"
+                aria-controls="product-panel-details"
+                data-product-tab="shipping"
+              >
+                Shipping Policy
+              </button>
+            </div>
+
+            <div
+              class="product-tabs__panel"
+              id="product-panel-details"
+              role="tabpanel"
+              aria-labelledby="product-tab-details"
+            >
+              <p>
+                Vestibulum commodo sapien non elit porttitor, vitae volutpat nibh
+                mollis. Nulla porta risus id neque tempor, in efficitur justo
+                imperdiet. Etiam a ex at ante tincidunt imperdiet. Nunc congue ex
+                vel nisl viverra, sit amet aliquet lectus ullamcorper. Praesent
+                luctus lacus non lorem elementum, eu tristique sapien suscipit.
+                Sed bibendum, ipsum nec viverra malesuada, erat nisi sodales
+                purus, eget hendrerit dui ligula eu enim. Ut non est nisi.
+                Pellentesque tristique pretium dolor eu commodo. Proin iaculis
+                nibh vitae lectus mollis bibendum. Quisque varius eget urna sit
+                amet luctus. Suspendisse potenti. Curabitur ac placerat est, sit
+                amet sodales risus. Pellentesque viverra dui auctor, ullamcorper
+                turpis pharetra, facilisis quam.
+              </p>
+
+              <p>
+                Proin iaculis nibh vitae lectus mollis bibendum. Quisque varius
+                eget urna sit amet luctus. Suspendisse potenti. Curabitur ac
+                placerat est, sit amet sodales risus. Pellentesque viverra dui
+                auctor, ullamcorper turpis pharetra, facilisis quam. Proin iaculis
+                nibh vitae lectus mollis bibendum.
+              </p>
+
+              <p>
+                Quisque varius eget urna sit amet luctus. Suspendisse potenti.
+                Curabitur ac placerat est, sit amet sodales risus. Pellentesque
+                viverra dui auctor.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="product-collection-section">
         <div class="container product-collection-section__container">
           <div
