@@ -1,142 +1,20 @@
 import { LOGIN_MODAL_OPEN_EVENT } from "./components/loginModal";
 import { createProductCardMarkup, truncateText } from "./components/productCards";
+import {
+  createPaginationMarkup,
+  getPageItems,
+  getProductsPerPage,
+  updateResultsCounter,
+} from "./components/catalogPagination";
+import { hideCatalogPopup, showCatalogPopup } from "./components/catalogPopup";
 import { createSetCardMarkup } from "./components/setCards";
+import { applyCatalogState, filterItemsBySearch } from "./utils/catalogFilters";
 import { isUserLoggedIn } from "./utils/auth";
 import { addToCart } from "./utils/cart";
-import { getProductData, type ProductDataItem } from "./utils/productData";
-
-type CatalogItem = ProductDataItem;
-
-type SortValue =
-  | "default"
-  | "price-asc"
-  | "price-desc"
-  | "popularity-desc"
-  | "rating-desc";
-
-type CatalogState = {
-  allProductItems: CatalogItem[];
-  visibleProductItems: CatalogItem[];
-  currentPage: number;
-  currentSort: SortValue;
-  currentSearchQuery: string;
-};
+import { getProductData } from "./utils/productData";
+import type { CatalogItem, CatalogState, SortValue } from "./types/catalog";
 
 const SETS_CATEGORY = "luggage sets";
-const PRODUCTS_PER_PAGE = 12;
-
-function sortItems(items: CatalogItem[], sortValue: SortValue): CatalogItem[] {
-  const nextItems = [...items];
-
-  switch (sortValue) {
-    case "price-asc":
-      return nextItems.sort((first, second) => first.price - second.price);
-    case "price-desc":
-      return nextItems.sort((first, second) => second.price - first.price);
-    case "popularity-desc":
-      return nextItems.sort(
-        (first, second) => second.popularity - first.popularity,
-      );
-    case "rating-desc":
-      return nextItems.sort((first, second) => second.rating - first.rating);
-    case "default":
-    default:
-      return nextItems;
-  }
-}
-
-function filterItemsBySearch(
-  items: CatalogItem[],
-  searchQuery: string,
-): CatalogItem[] {
-  if (!searchQuery) {
-    return [...items];
-  }
-
-  const normalizedQuery = searchQuery.toLowerCase();
-
-  return items.filter((item) =>
-    item.name.toLowerCase().includes(normalizedQuery),
-  );
-}
-
-function getPageItems(
-  items: CatalogItem[],
-  currentPage: number,
-): CatalogItem[] {
-  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-  return items.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
-}
-
-function updateResultsCounter(
-  element: HTMLElement,
-  totalItems: number,
-  currentPage: number,
-): void {
-  if (totalItems === 0) {
-    element.textContent = "Showing 0-0 Of 0 Results";
-    return;
-  }
-
-  const startItem = (currentPage - 1) * PRODUCTS_PER_PAGE + 1;
-  const endItem = Math.min(currentPage * PRODUCTS_PER_PAGE, totalItems);
-  element.textContent = `Showing ${startItem}-${endItem} Of ${totalItems} Results`;
-}
-
-function createPaginationMarkup(
-  totalItems: number,
-  currentPage: number,
-): string {
-  const totalPages = Math.ceil(totalItems / PRODUCTS_PER_PAGE);
-
-  if (totalPages <= 1) {
-    return "";
-  }
-
-  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
-    const page = index + 1;
-    const isActive = page === currentPage;
-
-    return `
-      <button
-        class="catalog__pagination-button${
-          isActive ? " catalog__pagination-button--active" : ""
-        }"
-        type="button"
-        data-page="${page}"
-        ${isActive ? 'aria-current="page"' : ""}
-      >
-        ${page}
-      </button>
-    `;
-  }).join("");
-
-  return `
-    <div class="catalog__pagination-inner">
-      <button
-        class="catalog__pagination-nav"
-        type="button"
-        data-page-nav="prev"
-        ${currentPage === 1 ? "disabled" : ""}
-      >
-        Prev
-      </button>
-
-      <div class="catalog__pagination-pages">
-        ${pageButtons}
-      </div>
-
-      <button
-        class="catalog__pagination-nav"
-        type="button"
-        data-page-nav="next"
-        ${currentPage === totalPages ? "disabled" : ""}
-      >
-        Next
-      </button>
-    </div>
-  `;
-}
 
 function scrollToCatalogSection(element: HTMLElement): void {
   const header = document.querySelector<HTMLElement>(".header");
@@ -154,27 +32,50 @@ function scrollToCatalogSection(element: HTMLElement): void {
   });
 }
 
-function showPopup(popup: HTMLElement): void {
-  popup.hidden = false;
-  document.body.classList.add("no-scroll");
-}
-
-function hidePopup(popup: HTMLElement): void {
-  popup.hidden = true;
-  document.body.classList.remove("no-scroll");
-}
-
-function applyState(state: CatalogState): CatalogItem[] {
-  const filteredItems = filterItemsBySearch(
-    state.allProductItems,
-    state.currentSearchQuery,
-  );
-
-  return sortItems(filteredItems, state.currentSort);
-}
-
 function requestLoginModalOpen(): void {
   document.dispatchEvent(new CustomEvent(LOGIN_MODAL_OPEN_EVENT));
+}
+
+type CatalogElements = {
+  productsList: HTMLElement;
+  resultsCounter: HTMLElement;
+  catalogTop: HTMLElement;
+  pagination: HTMLElement;
+};
+
+function renderCatalogPage(
+  state: CatalogState,
+  elements: CatalogElements,
+  shouldScroll = false,
+): void {
+  const productsPerPage = getProductsPerPage();
+  const totalPages = Math.ceil(
+    state.visibleProductItems.length / productsPerPage,
+  );
+
+  state.currentPage = Math.min(
+    Math.max(state.currentPage, 1),
+    Math.max(totalPages, 1),
+  );
+
+  const pagedItems = getPageItems(state.visibleProductItems, state.currentPage);
+
+  elements.productsList.innerHTML = pagedItems
+    .map(createProductCardMarkup)
+    .join("");
+  elements.pagination.innerHTML = createPaginationMarkup(
+    state.visibleProductItems.length,
+    state.currentPage,
+  );
+  updateResultsCounter(
+    elements.resultsCounter,
+    state.visibleProductItems.length,
+    state.currentPage,
+  );
+
+  if (shouldScroll) {
+    scrollToCatalogSection(elements.catalogTop);
+  }
 }
 
 export async function initCatalogPage(): Promise<void> {
@@ -246,38 +147,20 @@ export async function initCatalogPage(): Promise<void> {
     };
 
     const renderProductsPage = (shouldScroll = false): void => {
-      const totalPages = Math.ceil(
-        state.visibleProductItems.length / PRODUCTS_PER_PAGE,
+      renderCatalogPage(
+        state,
+        {
+          productsList,
+          resultsCounter,
+          catalogTop,
+          pagination,
+        },
+        shouldScroll,
       );
-
-      state.currentPage = Math.min(
-        Math.max(state.currentPage, 1),
-        Math.max(totalPages, 1),
-      );
-
-      const pagedItems = getPageItems(
-        state.visibleProductItems,
-        state.currentPage,
-      );
-
-      productsList.innerHTML = pagedItems.map(createProductCardMarkup).join("");
-      pagination.innerHTML = createPaginationMarkup(
-        state.visibleProductItems.length,
-        state.currentPage,
-      );
-      updateResultsCounter(
-        resultsCounter,
-        state.visibleProductItems.length,
-        state.currentPage,
-      );
-
-      if (shouldScroll) {
-        scrollToCatalogSection(catalogTop);
-      }
     };
 
     const updateVisibleItems = (shouldScroll = false): void => {
-      state.visibleProductItems = applyState(state);
+      state.visibleProductItems = applyCatalogState(state);
       state.currentPage = 1;
       renderProductsPage(shouldScroll);
     };
@@ -304,7 +187,7 @@ export async function initCatalogPage(): Promise<void> {
       const nextQuery = searchInput.value.trim();
 
       if (!nextQuery) {
-        hidePopup(popup);
+        hideCatalogPopup(popup);
         state.currentSearchQuery = "";
         updateVisibleItems();
         return;
@@ -313,12 +196,12 @@ export async function initCatalogPage(): Promise<void> {
       const matchedItems = filterItemsBySearch(state.allProductItems, nextQuery);
 
       if (matchedItems.length === 0) {
-        showPopup(popup);
+        showCatalogPopup(popup);
         return;
       }
 
       state.currentSearchQuery = nextQuery;
-      hidePopup(popup);
+      hideCatalogPopup(popup);
       updateVisibleItems();
     });
 
@@ -326,7 +209,7 @@ export async function initCatalogPage(): Promise<void> {
       updateSearchClearButton();
 
       if (searchInput.value.trim() === "" && state.currentSearchQuery !== "") {
-        hidePopup(popup);
+        hideCatalogPopup(popup);
         state.currentSearchQuery = "";
         updateVisibleItems();
       }
@@ -334,7 +217,7 @@ export async function initCatalogPage(): Promise<void> {
 
     searchClearButton.addEventListener("click", () => {
       searchInput.value = "";
-      hidePopup(popup);
+      hideCatalogPopup(popup);
       state.currentSearchQuery = "";
       updateSearchClearButton();
       updateVisibleItems();
@@ -407,12 +290,12 @@ export async function initCatalogPage(): Promise<void> {
     });
 
     popupCloseControls.forEach((control) => {
-      control.addEventListener("click", () => hidePopup(popup));
+      control.addEventListener("click", () => hideCatalogPopup(popup));
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !popup.hidden) {
-        hidePopup(popup);
+        hideCatalogPopup(popup);
       }
     });
   } catch (error) {
