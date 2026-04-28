@@ -8,11 +8,15 @@
   color: $clr-white;
   background:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    image-set(
-        url("/assets/images/cart/cart-hero.webp") 1x,
-        url("/assets/images/cart/cart-hero@2x.webp") 2x
-      )
-      center / cover no-repeat;
+    url("/assets/images/cart/cart-hero.webp") center / cover no-repeat;
+}
+
+@include retina {
+  .cart-hero {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("/assets/images/cart/cart-hero@2x.webp");
+  }
 }
 
 .cart-hero__container {

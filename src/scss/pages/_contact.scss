@@ -8,11 +8,15 @@
   color: $clr-white;
   background:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    image-set(
-        url("/assets/images/contact-us/contact-hero.webp") 1x,
-        url("/assets/images/contact-us/contact-hero@2x.webp") 2x
-      )
-      center / cover no-repeat;
+    url("/assets/images/contact-us/contact-hero.webp") center / cover no-repeat;
+}
+
+@include retina {
+  .contact-hero {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("/assets/images/contact-us/contact-hero@2x.webp");
+  }
 }
 
 .contact-hero__container {

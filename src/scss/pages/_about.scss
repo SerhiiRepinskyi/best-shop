@@ -8,11 +8,15 @@
   color: $clr-white;
   background:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    image-set(
-        url("/assets/images/about-us/about-hero.webp") 1x,
-        url("/assets/images/about-us/about-hero@2x.webp") 2x
-      )
-      center / cover no-repeat;
+    url("/assets/images/about-us/about-hero.webp") center / cover no-repeat;
+}
+
+@include retina {
+  .about-hero {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("/assets/images/about-us/about-hero@2x.webp");
+  }
 }
 
 .about-hero__container {

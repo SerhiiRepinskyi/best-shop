@@ -413,11 +413,15 @@
   padding: 50px 72px 80px;
   background:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    image-set(
-        url("/assets/images/offer-bg.webp") 1x,
-        url("/assets/images/offer-bg@2x.webp") 2x
-      )
-      center / cover no-repeat;
+    url("/assets/images/offer-bg.webp") center / cover no-repeat;
+}
+
+@include retina {
+  .offer__container {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("/assets/images/offer-bg@2x.webp");
+  }
 }
 
 .offer__discount {
