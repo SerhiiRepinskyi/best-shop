@@ -31,13 +31,19 @@
   flex: 1;
   display: flex;
   justify-content: center;
-
   z-index: 1;
+}
+
+.hero__image picture {
+  display: block;
+  width: 100%;
+  max-width: 766px;
 }
 
 .hero__image img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
 .hero__title {
@@ -171,17 +177,64 @@
 }
 
 /*------------ Adaptivity Hero ------------*/
-@include respond(mobile) {
-  .hero__top-inner {
+@include respond(tablet) {
+  .hero__top {
+    padding: 80px 0 100px;
+  }
+
+  .hero__top-inner,
+  .hero__bottom-inner {
     flex-direction: column;
   }
 
   .hero__content {
+    max-width: 100%;
     margin-right: 0;
+    margin-bottom: 32px;
+    text-align: center;
   }
 
-  .hero__bottom-inner {
-    flex-direction: column;
+  .hero__title {
+    font-size: clamp(38px, 6vw, 50px);
+  }
+
+  .hero__subtitle {
+    max-width: 620px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .hero__btn {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .hero__image {
+    width: 100%;
+  }
+
+  .hero__bottom {
+    margin-top: -70px;
+  }
+
+  .hero__bottom-col {
+    width: 100%;
+  }
+
+  .hero__bottom-col--left {
+    padding: 40px 40px 48px;
+  }
+
+  .hero__bottom-content {
+    left: 40px;
+    right: 40px;
+    max-width: 420px;
+  }
+}
+
+@include respond(mobile) {
+  .hero__content {
+    margin-bottom: 24px;
   }
 
   .hero__bottom {
@@ -195,6 +248,10 @@
   .hero__bottom-content {
     left: 24px;
     right: 24px;
+  }
+
+  .hero__title {
+    font-size: 36px;
   }
 
   .hero__btn,
