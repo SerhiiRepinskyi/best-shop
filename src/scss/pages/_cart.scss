@@ -30,11 +30,6 @@
 }
 
 /*------------ Cart Page ------------*/
-// .cart-page__container {
-// padding-top: 70px;
-// padding-bottom: 120px;
-// }
-
 .cart-page__content {
   display: flex;
   flex-direction: column;
@@ -229,11 +224,6 @@
 
 /*------------ Adaptivity Cart Page ------------*/
 @include respond(tablet) {
-  // .cart-page__container {
-  //   padding-top: 60px;
-  //   padding-bottom: 100px;
-  // }
-
   .cart-page__head,
   .cart-page__row {
     grid-template-columns: 110px minmax(140px, 1fr) 100px 140px 100px 70px;
@@ -256,11 +246,6 @@
 }
 
 @include respond(mobile) {
-  // .cart-page__container {
-  //   padding-top: 40px;
-  //   padding-bottom: 80px;
-  // }
-
   .cart-page__content {
     gap: 32px;
   }
