@@ -6,6 +6,9 @@
   align-items: center;
   justify-content: center;
 
+  padding: 10px 25px;
+  font-size: 17px;
+
   font-weight: $font-weight-bold;
   color: $clr-white;
   background-color: $clr-primary;
@@ -32,11 +35,6 @@
 .btn--sm {
   padding: 12px 20px;
   font-size: 12px;
-}
-
-.btn {
-  padding: 10px 25px;
-  font-size: 17px;
 }
 
 .btn--lg {
