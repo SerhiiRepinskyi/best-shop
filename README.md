@@ -72,6 +72,9 @@ index.html          → main entry point
 package.json        → project dependencies and scripts
 tsconfig.json       → TypeScript configuration
 vite.config.ts      → Vite build and dev server config
+...
+.stylelintrc.cjs    → configures Stylelint for Sass/CSS files
+eslint.config.mjs   → configures ESLint for TypeScript files
 
 ```
 

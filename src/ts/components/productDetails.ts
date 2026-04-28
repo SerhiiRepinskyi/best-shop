@@ -5,7 +5,7 @@ import {
 } from "./productDetailsContent";
 import { addToCart } from "../utils/cart";
 import { isUserLoggedIn } from "../utils/auth";
-import { getProductData, type ProductDataItem } from "../utils/productData";
+import { getProductData } from "../utils/productData";
 
 function requestLoginModalOpen(): void {
   document.dispatchEvent(new CustomEvent(LOGIN_MODAL_OPEN_EVENT));

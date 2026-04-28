@@ -12,7 +12,7 @@ import { applyCatalogState, filterItemsBySearch } from "./utils/catalogFilters";
 import { isUserLoggedIn } from "./utils/auth";
 import { addToCart } from "./utils/cart";
 import { getProductData } from "./utils/productData";
-import type { CatalogItem, CatalogState, SortValue } from "./types/catalog";
+import type { CatalogState, SortValue } from "./types/catalog";
 
 const SETS_CATEGORY = "luggage sets";
 
