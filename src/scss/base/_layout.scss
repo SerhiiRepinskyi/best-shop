@@ -1,16 +1,8 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-:root {
-  --header-height: 222px;
-}
-
-@include respond(mobile) {
-  :root {
-    --header-height: 84px;
-  }
-}
-
-body {
-  padding-top: var(--header-height);
+#header {
+  position: sticky;
+  top: 0;
+  z-index: $z-header;
 }

@@ -2,11 +2,6 @@
 @use "../abstracts/mixins" as *;
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: $z-header;
   background-color: $clr-white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
