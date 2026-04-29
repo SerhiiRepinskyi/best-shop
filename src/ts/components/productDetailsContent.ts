@@ -2,6 +2,7 @@ import type { ProductDataItem } from "../utils/productData";
 
 const SIZE_OPTIONS = ["S", "M", "L", "XL"];
 const COLOR_OPTIONS = ["red", "blue", "green", "black", "grey", "yellow", "pink"];
+const SETS_CATEGORY = "luggage sets";
 
 const DESCRIPTION_VARIANTS = [
   [
@@ -64,11 +65,54 @@ function createSingleOptionMarkup(value: string): string {
   return `<option value="${value}" selected>${value}</option>`;
 }
 
+function createProductGalleryMarkup(): string {
+  const galleryItems = [
+    {
+      src: "/assets/images/product/suitcase-small-card-1.webp",
+      alt: "Product detail preview 1",
+    },
+    {
+      src: "/assets/images/product/suitcase-small-card-2.webp",
+      alt: "Product detail preview 2",
+    },
+    {
+      src: "/assets/images/product/suitcase-small-card-3.webp",
+      alt: "Product detail preview 3",
+    },
+    {
+      src: "/assets/images/product/suitcase-small-card-4.webp",
+      alt: "Product detail preview 4",
+    },
+  ];
+
+  return `
+    <div class="product-details__gallery" aria-label="Product gallery previews">
+      ${galleryItems
+        .map(
+          (item, index) => `
+            <img
+              class="product-details__gallery-image"
+              src="${item.src}"
+              alt="${item.alt}"
+              width="150"
+              height="148"
+              loading="${index === 0 ? "eager" : "lazy"}"
+            />
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 export function createProductDetailsMarkup(
   product: ProductDataItem,
 ): string {
   const [firstParagraph, secondParagraph] = getDescriptionParagraphs(product.id);
-  const sizeOptions = createSelectedOptionsMarkup(SIZE_OPTIONS, product.size);
+  const isLuggageSet = product.category === SETS_CATEGORY;
+  const sizeOptions = isLuggageSet
+    ? createSingleOptionMarkup(product.size)
+    : createSelectedOptionsMarkup(SIZE_OPTIONS, product.size);
   const colorOptions = createSelectedOptionsMarkup(COLOR_OPTIONS, product.color);
   const categoryOptions = createSingleOptionMarkup(product.category);
 
@@ -82,6 +126,7 @@ export function createProductDetailsMarkup(
           width="645"
           height="860"
         />
+        ${createProductGalleryMarkup()}
       </div>
 
       <div class="product-details__info">
@@ -112,6 +157,7 @@ export function createProductDetailsMarkup(
               id="product-size"
               name="size"
               data-product-size
+              ${isLuggageSet ? "disabled" : ""}
             >
               ${sizeOptions}
             </select>
