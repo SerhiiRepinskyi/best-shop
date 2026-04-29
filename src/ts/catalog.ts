@@ -1,4 +1,11 @@
 import { LOGIN_MODAL_OPEN_EVENT } from "./components/loginModal";
+import {
+  FILTER_KEYS,
+  initializeFilterOptions,
+  type FilterKey,
+  updateFilterFieldState,
+  updateSalesFieldState,
+} from "./components/catalogFiltersUi";
 import { createProductCardMarkup, truncateText } from "./components/productCards";
 import {
   createPaginationMarkup,
@@ -12,9 +19,7 @@ import { applyCatalogState, filterItemsBySearch } from "./utils/catalogFilters";
 import { isUserLoggedIn } from "./utils/auth";
 import { addToCart } from "./utils/cart";
 import { getProductData } from "./utils/productData";
-import type { CatalogState, SortValue } from "./types/catalog";
-
-const SETS_CATEGORY = "luggage sets";
+import type { CatalogFilters, CatalogState, SortValue } from "./types/catalog";
 
 function scrollToCatalogSection(element: HTMLElement): void {
   const header = document.querySelector<HTMLElement>(".header");
@@ -102,6 +107,19 @@ export async function initCatalogPage(): Promise<void> {
   const searchClearButton = document.querySelector<HTMLButtonElement>(
     "[data-catalog-search-clear]",
   );
+  const filtersToggleButton = document.querySelector<HTMLButtonElement>(
+    "[data-catalog-filters-toggle]",
+  );
+  const filtersResetButton = document.querySelector<HTMLButtonElement>(
+    "[data-catalog-filters-reset]",
+  );
+  const filtersPanel = document.querySelector<HTMLElement>(
+    "[data-catalog-filters-panel]",
+  );
+  const filterFields = document.querySelectorAll<HTMLElement>("[data-filter-field]");
+  const salesFilterInput = document.querySelector<HTMLInputElement>(
+    "[data-filter-sales]",
+  );
   const popup = document.querySelector<HTMLElement>("[data-catalog-popup]");
   const popupCloseControls = document.querySelectorAll<HTMLElement>(
     "[data-catalog-popup-close]",
@@ -117,6 +135,10 @@ export async function initCatalogPage(): Promise<void> {
     !searchForm ||
     !searchInput ||
     !searchClearButton ||
+    !filtersToggleButton ||
+    !filtersResetButton ||
+    !filtersPanel ||
+    !salesFilterInput ||
     !popup
   ) {
     return;
@@ -124,11 +146,9 @@ export async function initCatalogPage(): Promise<void> {
 
   try {
     const items = await getProductData();
-    const productItems = items.filter(
-      (item) => item.category !== SETS_CATEGORY,
-    );
+    const productItems = items;
     const setItems = items
-      .filter((item) => item.category === SETS_CATEGORY)
+      .filter((item) => item.category === "luggage sets")
       .sort((first, second) => second.popularity - first.popularity);
     const productItemsMap = new Map(
       productItems.map((item) => [item.id, item] as const),
@@ -140,10 +160,23 @@ export async function initCatalogPage(): Promise<void> {
       currentPage: 1,
       currentSort: "default",
       currentSearchQuery: "",
+      filters: {
+        size: "",
+        color: "",
+        category: "",
+        salesOnly: false,
+      },
     };
 
     const updateSearchClearButton = (): void => {
       searchClearButton.hidden = searchInput.value.trim() === "";
+    };
+
+    const updateFiltersToggleButton = (): void => {
+      const isExpanded = !filtersPanel.hidden;
+
+      filtersToggleButton.textContent = isExpanded ? "Hide Filters" : "Show Filters";
+      filtersToggleButton.setAttribute("aria-expanded", String(isExpanded));
     };
 
     const renderProductsPage = (shouldScroll = false): void => {
@@ -165,6 +198,8 @@ export async function initCatalogPage(): Promise<void> {
       renderProductsPage(shouldScroll);
     };
 
+    initializeFilterOptions(productItems, state.filters);
+    updateSalesFieldState(salesFilterInput);
     setsList.innerHTML = setItems
       .map((item) =>
         createSetCardMarkup({
@@ -175,6 +210,7 @@ export async function initCatalogPage(): Promise<void> {
       .join("");
     renderProductsPage();
     updateSearchClearButton();
+    updateFiltersToggleButton();
 
     sortSelect.addEventListener("change", () => {
       state.currentSort = sortSelect.value as SortValue;
@@ -222,6 +258,94 @@ export async function initCatalogPage(): Promise<void> {
       updateSearchClearButton();
       updateVisibleItems();
       searchInput.focus();
+    });
+
+    filtersToggleButton.addEventListener("click", () => {
+      filtersPanel.hidden = !filtersPanel.hidden;
+      updateFiltersToggleButton();
+    });
+
+    filtersResetButton.addEventListener("click", () => {
+      const defaultFilters: CatalogFilters = {
+        size: "",
+        color: "",
+        category: "",
+        salesOnly: false,
+      };
+
+      state.filters = defaultFilters;
+      salesFilterInput.checked = false;
+      updateSalesFieldState(salesFilterInput);
+
+      FILTER_KEYS.forEach((key) => {
+        const field = document.querySelector<HTMLElement>(
+          `[data-filter-field="${key}"]`,
+        );
+
+        if (field) {
+          updateFilterFieldState(field, "");
+        }
+      });
+
+      updateVisibleItems();
+    });
+
+    filterFields.forEach((field) => {
+      const trigger = field.querySelector<HTMLButtonElement>("[data-filter-trigger]");
+
+      trigger?.addEventListener("click", () => {
+        const isOpen = field.classList.contains("catalog-filters__field--open");
+
+        filterFields.forEach((otherField) => {
+          const otherTrigger =
+            otherField.querySelector<HTMLElement>("[data-filter-trigger]");
+
+          otherField.classList.remove("catalog-filters__field--open");
+          otherTrigger?.setAttribute("aria-expanded", "false");
+        });
+
+        field.classList.toggle("catalog-filters__field--open", !isOpen);
+        trigger.setAttribute("aria-expanded", String(!isOpen));
+      });
+    });
+
+    filtersPanel.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      const optionButton = target.closest<HTMLButtonElement>("[data-filter-option]");
+
+      if (!optionButton) {
+        return;
+      }
+
+      const filterKey = optionButton.dataset.filterKey as FilterKey | undefined;
+      const filterValue = optionButton.dataset.filterValue ?? "";
+      const field = optionButton.closest<HTMLElement>("[data-filter-field]");
+
+      if (!filterKey || !field) {
+        return;
+      }
+
+      state.filters = {
+        ...state.filters,
+        [filterKey]: filterValue,
+      };
+
+      updateFilterFieldState(field, filterValue);
+      updateVisibleItems();
+    });
+
+    salesFilterInput.addEventListener("change", () => {
+      state.filters = {
+        ...state.filters,
+        salesOnly: salesFilterInput.checked,
+      };
+      updateSalesFieldState(salesFilterInput);
+      updateVisibleItems();
     });
 
     pagination.addEventListener("click", (event) => {
@@ -297,6 +421,34 @@ export async function initCatalogPage(): Promise<void> {
       if (event.key === "Escape" && !popup.hidden) {
         hideCatalogPopup(popup);
       }
+
+      if (event.key === "Escape") {
+        filterFields.forEach((field) => {
+          const trigger = field.querySelector<HTMLElement>("[data-filter-trigger]");
+
+          field.classList.remove("catalog-filters__field--open");
+          trigger?.setAttribute("aria-expanded", "false");
+        });
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      if (target.closest("[data-filter-dropdown]")) {
+        return;
+      }
+
+      filterFields.forEach((field) => {
+        const trigger = field.querySelector<HTMLElement>("[data-filter-trigger]");
+
+        field.classList.remove("catalog-filters__field--open");
+        trigger?.setAttribute("aria-expanded", "false");
+      });
     });
   } catch (error) {
     console.error(error);

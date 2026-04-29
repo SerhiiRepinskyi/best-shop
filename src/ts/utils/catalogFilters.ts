@@ -1,4 +1,9 @@
-import type { CatalogItem, CatalogState, SortValue } from "../types/catalog";
+import type {
+  CatalogFilters,
+  CatalogItem,
+  CatalogState,
+  SortValue,
+} from "../types/catalog";
 
 export function sortItems(
   items: CatalogItem[],
@@ -38,10 +43,39 @@ export function filterItemsBySearch(
   );
 }
 
+export function filterItemsByCatalogFilters(
+  items: CatalogItem[],
+  filters: CatalogFilters,
+): CatalogItem[] {
+  return items.filter((item) => {
+    if (filters.size && item.size !== filters.size) {
+      return false;
+    }
+
+    if (filters.color && item.color !== filters.color) {
+      return false;
+    }
+
+    if (filters.category && item.category !== filters.category) {
+      return false;
+    }
+
+    if (filters.salesOnly && !item.salesStatus) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
 export function applyCatalogState(state: CatalogState): CatalogItem[] {
-  const filteredItems = filterItemsBySearch(
+  const searchedItems = filterItemsBySearch(
     state.allProductItems,
     state.currentSearchQuery,
+  );
+  const filteredItems = filterItemsByCatalogFilters(
+    searchedItems,
+    state.filters,
   );
 
   return sortItems(filteredItems, state.currentSort);

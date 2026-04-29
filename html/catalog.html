@@ -20,6 +20,149 @@
     <main class="main">
       <section class="catalog">
         <div class="container catalog__container">
+          <div class="catalog__filter-actions">
+            <button
+              class="btn catalog__filter-action"
+              type="button"
+              aria-expanded="false"
+              aria-controls="catalog-filters-panel"
+              data-catalog-filters-toggle
+            >
+              Show Filters
+            </button>
+            <button
+              class="btn catalog__filter-action"
+              type="button"
+              data-catalog-filters-reset
+            >
+              Clear Filters
+            </button>
+          </div>
+
+          <section
+            class="catalog-filters"
+            id="catalog-filters-panel"
+            aria-label="Catalog filters"
+            data-catalog-filters-panel
+            hidden
+          >
+            <div class="catalog-filters__inner">
+              <div
+                class="catalog-filters__field"
+                data-filter-field="size"
+                data-filter-dropdown
+              >
+                <span class="catalog-filters__label">Size</span>
+                <button
+                  class="catalog-filters__trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  data-filter-trigger
+                >
+                  <span data-filter-trigger-label>Choose option</span>
+                </button>
+                <ul
+                  class="catalog-filters__menu"
+                  role="listbox"
+                  aria-label="Filter by size"
+                >
+                  <li>
+                    <button
+                      class="catalog-filters__option catalog-filters__option--active"
+                      type="button"
+                      data-filter-option
+                      data-filter-key="size"
+                      data-filter-value=""
+                    >
+                      All sizes
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <div
+                class="catalog-filters__field"
+                data-filter-field="color"
+                data-filter-dropdown
+              >
+                <span class="catalog-filters__label">Color</span>
+                <button
+                  class="catalog-filters__trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  data-filter-trigger
+                >
+                  <span data-filter-trigger-label>Choose option</span>
+                </button>
+                <ul
+                  class="catalog-filters__menu"
+                  role="listbox"
+                  aria-label="Filter by color"
+                >
+                  <li>
+                    <button
+                      class="catalog-filters__option catalog-filters__option--active"
+                      type="button"
+                      data-filter-option
+                      data-filter-key="color"
+                      data-filter-value=""
+                    >
+                      All colors
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <div
+                class="catalog-filters__field"
+                data-filter-field="category"
+                data-filter-dropdown
+              >
+                <span class="catalog-filters__label">Category</span>
+                <button
+                  class="catalog-filters__trigger"
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  data-filter-trigger
+                >
+                  <span data-filter-trigger-label>Choose option</span>
+                </button>
+                <ul
+                  class="catalog-filters__menu"
+                  role="listbox"
+                  aria-label="Filter by category"
+                >
+                  <li>
+                    <button
+                      class="catalog-filters__option catalog-filters__option--active"
+                      type="button"
+                      data-filter-option
+                      data-filter-key="category"
+                      data-filter-value=""
+                    >
+                      All categories
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <label class="catalog-filters__field catalog-filters__field--sales">
+                <span class="catalog-filters__label">Sales</span>
+                <span class="catalog-filters__sales-toggle">
+                  <input
+                    class="catalog-filters__sales-input"
+                    type="checkbox"
+                    data-filter-sales
+                  />
+                  <span class="catalog-filters__sales-control" aria-hidden="true"></span>
+                </span>
+              </label>
+            </div>
+          </section>
+
           <div class="catalog__top">
             <p class="catalog__results" data-catalog-results>
               Showing 0-0 Of 0 Results
