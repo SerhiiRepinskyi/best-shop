@@ -35,7 +35,7 @@ export async function initProductDetails(): Promise<void> {
 
     let quantity = 1;
 
-    root.innerHTML = createProductDetailsMarkup(product, products);
+    root.innerHTML = createProductDetailsMarkup(product);
     document.title = `Best Shop | ${product.name}`;
 
     const quantityValue = root.querySelector<HTMLElement>(
@@ -44,6 +44,8 @@ export async function initProductDetails(): Promise<void> {
     const addToCartButton = root.querySelector<HTMLButtonElement>(
       "[data-product-add-to-cart]",
     );
+    const sizeSelect = root.querySelector<HTMLSelectElement>("[data-product-size]");
+    const colorSelect = root.querySelector<HTMLSelectElement>("[data-product-color]");
 
     const updateQuantityValue = (): void => {
       if (quantityValue) {
@@ -85,13 +87,16 @@ export async function initProductDetails(): Promise<void> {
         return;
       }
 
+      const selectedSize = sizeSelect?.value || product.size;
+      const selectedColor = colorSelect?.value || product.color;
+
       addToCart({
         productId: product.id,
         name: product.name,
         price: product.price,
         imageUrl: product.imageUrl,
-        color: product.color,
-        size: product.size,
+        color: selectedColor,
+        size: selectedSize,
         quantity,
       });
     });

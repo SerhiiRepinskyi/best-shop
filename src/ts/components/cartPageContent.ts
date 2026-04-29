@@ -33,7 +33,7 @@ export function createCartItemMarkup(item: CartDisplayItem): string {
             type="button"
             aria-label="Decrease quantity"
             data-cart-action="decrease"
-            data-product-id="${item.productId}"
+            data-product-name="${item.name}"
             data-product-color="${item.color}"
             data-product-size="${item.size}"
           >
@@ -45,7 +45,7 @@ export function createCartItemMarkup(item: CartDisplayItem): string {
             type="button"
             aria-label="Increase quantity"
             data-cart-action="increase"
-            data-product-id="${item.productId}"
+            data-product-name="${item.name}"
             data-product-color="${item.color}"
             data-product-size="${item.size}"
           >
@@ -64,7 +64,7 @@ export function createCartItemMarkup(item: CartDisplayItem): string {
           type="button"
           aria-label="Remove item"
           data-cart-action="remove"
-          data-product-id="${item.productId}"
+          data-product-name="${item.name}"
           data-product-color="${item.color}"
           data-product-size="${item.size}"
         >

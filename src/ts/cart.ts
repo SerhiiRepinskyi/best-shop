@@ -70,16 +70,16 @@ export function initCartPage(): void {
   };
 
   const getItemIdentityFromTrigger = (trigger: HTMLElement) => {
-    const productId = trigger.dataset.productId;
+    const name = trigger.dataset.productName;
     const color = trigger.dataset.productColor;
     const size = trigger.dataset.productSize;
 
-    if (!productId || !color || !size) {
+    if (!name || !color || !size) {
       return null;
     }
 
     return {
-      productId,
+      name,
       color,
       size,
     };
@@ -126,7 +126,7 @@ export function initCartPage(): void {
 
     const item = getCartItems().find(
       (cartItem) =>
-        cartItem.productId === identity.productId &&
+        cartItem.name === identity.name &&
         cartItem.color === identity.color &&
         cartItem.size === identity.size,
     );

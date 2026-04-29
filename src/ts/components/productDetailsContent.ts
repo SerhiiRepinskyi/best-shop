@@ -1,6 +1,7 @@
 import type { ProductDataItem } from "../utils/productData";
 
-type ProductOptionField = "size" | "color" | "category";
+const SIZE_OPTIONS = ["S", "M", "L", "XL"];
+const COLOR_OPTIONS = ["red", "blue", "green", "black", "grey", "yellow", "pink"];
 
 const DESCRIPTION_VARIANTS = [
   [
@@ -49,38 +50,27 @@ function getDescriptionParagraphs(productId: string): string[] {
   return DESCRIPTION_VARIANTS[hash % DESCRIPTION_VARIANTS.length];
 }
 
-function getUniqueOptions(
-  items: ProductDataItem[],
-  field: ProductOptionField,
-): string[] {
-  return [...new Set(items.map((item) => item[field]))].sort((first, second) =>
-    first.localeCompare(second),
-  );
+function createSelectedOptionsMarkup(options: string[], selectedValue: string): string {
+  return options
+    .map((option) => {
+      const isSelected = option === selectedValue ? " selected" : "";
+
+      return `<option value="${option}"${isSelected}>${option}</option>`;
+    })
+    .join("");
 }
 
-function createSelectOptionsMarkup(options: string[]): string {
-  return [
-    '<option value="">Choose option</option>',
-    ...options.map(
-      (option) => `<option value="${option}">${option}</option>`,
-    ),
-  ].join("");
+function createSingleOptionMarkup(value: string): string {
+  return `<option value="${value}" selected>${value}</option>`;
 }
 
 export function createProductDetailsMarkup(
   product: ProductDataItem,
-  allProducts: ProductDataItem[],
 ): string {
   const [firstParagraph, secondParagraph] = getDescriptionParagraphs(product.id);
-  const sizeOptions = createSelectOptionsMarkup(
-    getUniqueOptions(allProducts, "size"),
-  );
-  const colorOptions = createSelectOptionsMarkup(
-    getUniqueOptions(allProducts, "color"),
-  );
-  const categoryOptions = createSelectOptionsMarkup(
-    getUniqueOptions(allProducts, "category"),
-  );
+  const sizeOptions = createSelectedOptionsMarkup(SIZE_OPTIONS, product.size);
+  const colorOptions = createSelectedOptionsMarkup(COLOR_OPTIONS, product.color);
+  const categoryOptions = createSingleOptionMarkup(product.category);
 
   return `
     <article class="product-details__content">
@@ -117,14 +107,24 @@ export function createProductDetailsMarkup(
         <div class="product-details__selectors">
           <div class="product-details__field">
             <label class="product-details__label" for="product-size">Size</label>
-            <select class="product-details__select" id="product-size" name="size">
+            <select
+              class="product-details__select"
+              id="product-size"
+              name="size"
+              data-product-size
+            >
               ${sizeOptions}
             </select>
           </div>
 
           <div class="product-details__field">
             <label class="product-details__label" for="product-color">Color</label>
-            <select class="product-details__select" id="product-color" name="color">
+            <select
+              class="product-details__select"
+              id="product-color"
+              name="color"
+              data-product-color
+            >
               ${colorOptions}
             </select>
           </div>
@@ -135,6 +135,7 @@ export function createProductDetailsMarkup(
               class="product-details__select"
               id="product-category"
               name="category"
+              data-product-category
             >
               ${categoryOptions}
             </select>

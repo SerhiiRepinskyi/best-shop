@@ -17,14 +17,14 @@ type AddToCartPayload = Omit<CartItem, "quantity"> & {
   quantity?: number;
 };
 
-type CartItemIdentity = Pick<CartItem, "productId" | "color" | "size">;
+type CartItemIdentity = Pick<CartItem, "name" | "color" | "size">;
 
 function emitCartUpdated(): void {
   document.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT));
 }
 
 function createCartItemKey(item: CartItemIdentity): string {
-  return `${item.productId}::${item.color}::${item.size}`;
+  return `${item.name}::${item.color}::${item.size}`;
 }
 
 export function getCartItems(): CartItem[] {
