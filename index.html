@@ -153,95 +153,40 @@
             Duis vestibulum elit vel neque pharetra
           </p>
 
-          <ul class="travel-showcase__list">
-            <li class="travel-showcase__item">
-              <article class="travel-showcase-card">
-                <img
-                  class="travel-showcase-card__image"
-                  src="/assets/images/suitcase-real-live-1.webp"
-                  alt="Travel suitcase on a city road"
-                  width="296"
-                  height="600"
-                />
-                <div class="travel-showcase-card__overlay"></div>
-                <div class="travel-showcase-card__content">
-                  <h3 class="travel-showcase-card__title">
-                    Duis vestibulum elit vel neque.
-                  </h3>
-                  <p class="travel-showcase-card__text">
-                    Duis vestibulum vel neque pharetra vulputate. Quisque
-                    scelerisque nisi.
-                  </p>
-                </div>
-              </article>
-            </li>
+          <div class="travel-showcase-slider" data-travel-showcase>
+            <div class="travel-showcase-slider__viewport">
+              <ul
+                class="travel-showcase-slider__track"
+                data-travel-showcase-track
+              ></ul>
+            </div>
 
-            <li class="travel-showcase__item">
-              <article class="travel-showcase-card">
-                <img
-                  class="travel-showcase-card__image"
-                  src="/assets/images/suitcase-real-live-2.webp"
-                  alt="Travel suitcase in an airport terminal"
-                  width="296"
-                  height="600"
-                />
-                <div class="travel-showcase-card__overlay"></div>
-                <div class="travel-showcase-card__content">
-                  <h3 class="travel-showcase-card__title">
-                    Neque vestibulum elit nequvel.
-                  </h3>
-                  <p class="travel-showcase-card__text">
-                    Duis vestibulum vel neque pharetra vulputate. Quisque
-                    scelerisque nisi.
-                  </p>
-                </div>
-              </article>
-            </li>
+            <div class="travel-showcase-slider__controls">
+              <button
+                class="travel-showcase-slider__arrow"
+                type="button"
+                aria-label="Previous travel showcase slides"
+                data-travel-showcase-prev
+              >
+                <span aria-hidden="true">&larr;</span>
+              </button>
 
-            <li class="travel-showcase__item">
-              <article class="travel-showcase-card">
-                <img
-                  class="travel-showcase-card__image"
-                  src="/assets/images/suitcase-real-live-3.webp"
-                  alt="Travel suitcase in a bright terminal lounge"
-                  width="296"
-                  height="600"
-                />
-                <div class="travel-showcase-card__overlay"></div>
-                <div class="travel-showcase-card__content">
-                  <h3 class="travel-showcase-card__title">
-                    Elituis stibulum elit velneque.
-                  </h3>
-                  <p class="travel-showcase-card__text">
-                    Duis vestibulum vel neque pharetra vulputate. Quisque
-                    scelerisque nisi.
-                  </p>
-                </div>
-              </article>
-            </li>
+              <div
+                class="travel-showcase-slider__dots"
+                data-travel-showcase-dots
+                aria-label="Travel showcase pagination"
+              ></div>
 
-            <li class="travel-showcase__item">
-              <article class="travel-showcase-card">
-                <img
-                  class="travel-showcase-card__image"
-                  src="/assets/images/suitcase-real-live-4.webp"
-                  alt="Travel suitcase in a hotel lobby"
-                  width="296"
-                  height="600"
-                />
-                <div class="travel-showcase-card__overlay"></div>
-                <div class="travel-showcase-card__content">
-                  <h3 class="travel-showcase-card__title">
-                    Vel vestibulum elit tuvel euqen.
-                  </h3>
-                  <p class="travel-showcase-card__text">
-                    Duis vestibulum vel neque pharetra vulputate. Quisque
-                    scelerisque nisi.
-                  </p>
-                </div>
-              </article>
-            </li>
-          </ul>
+              <button
+                class="travel-showcase-slider__arrow"
+                type="button"
+                aria-label="Next travel showcase slides"
+                data-travel-showcase-next
+              >
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 

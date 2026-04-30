@@ -1,0 +1,245 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.travel-showcase__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-showcase__title {
+  margin-bottom: 10px;
+
+  font-size: clamp(32px, 4vw, 40px);
+  font-weight: $font-weight-black;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.travel-showcase__subtitle {
+  margin-bottom: 60px;
+
+  font-size: 17px;
+  color: $clr-text-secondary;
+  text-align: center;
+}
+
+.travel-showcase-slider {
+  --travel-showcase-columns: 4;
+  --travel-showcase-gap: 39px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.travel-showcase-slider__viewport {
+  overflow: hidden;
+}
+
+.travel-showcase-slider__track {
+  display: flex;
+  gap: var(--travel-showcase-gap);
+
+  transition: transform $transition-default;
+  will-change: transform;
+}
+
+.travel-showcase-slider__slide {
+  min-width: calc(
+    (
+        100% -
+          (var(--travel-showcase-gap) * (var(--travel-showcase-columns) - 1))
+      ) /
+      var(--travel-showcase-columns)
+  );
+}
+
+.travel-showcase-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+
+  transition:
+    box-shadow $transition-default,
+    transform $transition-default;
+}
+
+.travel-showcase-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform $transition-default;
+}
+
+.travel-showcase-card:hover .travel-showcase-card__image {
+  transform: scale(1.03);
+}
+
+.travel-showcase-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.travel-showcase-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.5) 55%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+}
+
+.travel-showcase-card__content {
+  position: absolute;
+  right: 32px;
+  bottom: 40px;
+  left: 32px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.travel-showcase-card__title {
+  max-width: 210px;
+
+  font-size: 19px;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  color: $clr-white;
+}
+
+.travel-showcase-card__text {
+  max-width: 210px;
+
+  font-size: 19px;
+  color: $clr-white;
+}
+
+.travel-showcase-slider__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.travel-showcase-slider__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba($clr-primary, 0.25);
+  background-color: $clr-white;
+  color: $clr-primary;
+
+  transition:
+    background-color $transition-default,
+    color $transition-default,
+    border-color $transition-default,
+    box-shadow $transition-default;
+}
+
+.travel-showcase-slider__arrow:hover,
+.travel-showcase-slider__arrow:focus-visible {
+  border-color: $clr-primary;
+  background-color: $clr-primary;
+  color: $clr-white;
+  box-shadow: 0 12px 30px rgba($clr-primary, 0.22);
+}
+
+.travel-showcase-slider__arrow:disabled {
+  border-color: rgba($clr-black, 0.12);
+  background-color: rgba($clr-black, 0.04);
+  color: rgba($clr-black, 0.35);
+  box-shadow: none;
+  cursor: default;
+}
+
+.travel-showcase-slider__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.travel-showcase-slider__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba($clr-primary, 0.3);
+  background-color: rgba($clr-primary, 0.12);
+
+  transition:
+    transform $transition-default,
+    background-color $transition-default,
+    border-color $transition-default;
+}
+
+.travel-showcase-slider__dot:hover,
+.travel-showcase-slider__dot:focus-visible,
+.travel-showcase-slider__dot.is-active {
+  border-color: $clr-primary;
+  background-color: $clr-primary;
+  transform: scale(1.12);
+}
+
+@include respond(tablet) {
+  .travel-showcase__subtitle {
+    margin-bottom: 40px;
+  }
+
+  .travel-showcase-slider {
+    --travel-showcase-columns: 2;
+    --travel-showcase-gap: 20px;
+
+    gap: 24px;
+  }
+}
+
+@include respond(mobile) {
+  .travel-showcase__subtitle {
+    margin-bottom: 32px;
+  }
+
+  .travel-showcase-slider {
+    --travel-showcase-columns: 1;
+    --travel-showcase-gap: 20px;
+
+    gap: 20px;
+  }
+
+  .travel-showcase-card {
+    min-height: 440px;
+  }
+
+  .travel-showcase-card__content {
+    right: 24px;
+    bottom: 24px;
+    left: 24px;
+    gap: 16px;
+  }
+
+  .travel-showcase-card__title {
+    max-width: 100%;
+    font-size: 18px;
+  }
+
+  .travel-showcase-card__text {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .travel-showcase-slider__controls {
+    gap: 14px;
+  }
+
+  .travel-showcase-slider__arrow {
+    width: 46px;
+    height: 46px;
+  }
+}

@@ -7,6 +7,7 @@ import { initCartPage } from "./cart";
 import { initContactForm } from "./contact";
 import { initCatalogPage } from "./catalog";
 import { initProductPage } from "./product";
+import { initHomePage } from "./home";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await Promise.all([
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initCartCounter();
   initCartPage();
   initContactForm();
+  initHomePage();
   await initCatalogPage();
   await initProductPage();
 });
