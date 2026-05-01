@@ -1,6 +1,6 @@
 # <img src="./public/favicon.svg" width="25"/> Best Shop — Front-End Capstone Project (EPAM Fundamentals 2026)
 
-This project is a front-end implementation of an e-commerce website built with HTML, SCSS, and TypeScript.
+This project is a **multi-page online store** built with HTML, SCSS, and TypeScript.
 
 It includes dynamic rendering of components, product catalog, product details page, and basic client-side state management (cart and user session via LocalStorage).
 
@@ -92,7 +92,7 @@ eslint.config.mjs   → configures ESLint for TypeScript files
 This project was validated against the official Final Project Implementation Checklist provided for the course.
 
 - 📄 Checklist file: Final_Project_Implementation_Checklist.docx
-- ✅ Final score: **?? / 64**
+- ✅ Final score: **62 / 64**
 
 ---
 
