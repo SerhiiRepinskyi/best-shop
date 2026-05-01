@@ -46,11 +46,7 @@
 
 .travel-showcase-slider__slide {
   min-width: calc(
-    (
-        100% -
-          (var(--travel-showcase-gap) * (var(--travel-showcase-columns) - 1))
-      ) /
-      var(--travel-showcase-columns)
+    (100% - (var(--travel-showcase-gap) * (var(--travel-showcase-columns) - 1))) / var(--travel-showcase-columns)
   );
 }
 
@@ -117,6 +113,7 @@
   max-width: 210px;
 
   font-size: 19px;
+  line-height: 1.45;
   color: $clr-white;
 }
 

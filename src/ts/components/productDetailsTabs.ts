@@ -1,3 +1,8 @@
+import {
+  createProductReviewsMarkup,
+  initProductReviewsForm,
+} from "./productReviewsTab";
+
 export function initProductDetailsTabs(): void {
   const root = document.querySelector<HTMLElement>("[data-product-tabs]");
 
@@ -12,29 +17,14 @@ export function initProductDetailsTabs(): void {
     return;
   }
 
+  const productName =
+    document
+      .querySelector<HTMLElement>(".product-details__title")
+      ?.textContent?.trim() ?? "this product";
+
   const tabContentMap: Record<string, string> = {
     details: panel.innerHTML,
-    reviews: `
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-        fermentum, augue vitae faucibus pretium, arcu elit commodo nibh, sed
-        sodales odio risus at lorem. Vivamus convallis feugiat velit, nec
-        pharetra risus faucibus vitae. Pellentesque habitant morbi tristique
-        senectus et netus et malesuada fames ac turpis egestas.
-      </p>
-
-      <p>
-        Mauris vitae tortor in arcu eleifend tincidunt. Sed et malesuada
-        sapien. Nulla facilisi. Donec porttitor, lacus non sodales vehicula,
-        ligula lorem luctus elit, vel accumsan erat metus vitae nunc.
-      </p>
-
-      <p>
-        Integer eu turpis ut sapien varius pellentesque. Suspendisse at nisi
-        erat. Duis ultrices, neque nec posuere hendrerit, lorem nisl pulvinar
-        ligula, in feugiat sem leo ac nibh.
-      </p>
-    `,
+    reviews: createProductReviewsMarkup(productName),
     shipping: `
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
@@ -70,6 +60,11 @@ export function initProductDetailsTabs(): void {
     const nextContentKey = nextTab.dataset.productTab ?? "details";
     panel.innerHTML = tabContentMap[nextContentKey] ?? tabContentMap.details;
     panel.setAttribute("aria-labelledby", nextTab.id);
+    panel.classList.toggle("product-tabs__panel--reviews", nextContentKey === "reviews");
+
+    if (nextContentKey === "reviews") {
+      initProductReviewsForm(panel);
+    }
   };
 
   root.addEventListener("click", (event) => {
