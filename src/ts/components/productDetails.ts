@@ -87,8 +87,8 @@ export async function initProductDetails(): Promise<void> {
         return;
       }
 
-      const selectedSize = sizeSelect?.value || product.size;
-      const selectedColor = colorSelect?.value || product.color;
+      const selectedSize = sizeSelect?.value ?? product.size;
+      const selectedColor = colorSelect?.value ?? product.color;
 
       addToCart({
         productId: product.id,
