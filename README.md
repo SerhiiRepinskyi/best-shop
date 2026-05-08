@@ -1,8 +1,8 @@
-# <img src="./public/favicon.svg" width="25"/> Best Shop — Front-End Capstone Project (EPAM Fundamentals 2026)
+# <img src="./public/favicon.svg" width="25"/> Best Shop – Multi-Page E-Commerce Front-End Project
 
-This project is a **multi-page online store** built with HTML, SCSS, and TypeScript.
+This project is a multi-page e-commerce front-end application built with HTML, SCSS, and TypeScript, and Vite.
 
-It includes dynamic rendering of components, product catalog, product details page, and basic client-side state management (cart and user session via LocalStorage).
+It includes dynamic rendering of components, reusable UI architecture, responsive layouts, product catalog functionality, and client-side cart/session management using LocalStorage.
 
 
 ![Preview](public/preview.webp)
@@ -87,17 +87,10 @@ eslint.config.mjs   → configures ESLint for TypeScript files
 
 ---
 
-## 📊 Project Evaluation (Checklist)
-
-This project was validated against the official Final Project Implementation Checklist provided for the course.
-
-- 📄 Checklist file: Final_Project_Implementation_Checklist.docx
-- ✅ Final score: **62 / 64**
-
----
-
 ## 👨‍💻 Author
 
-**Serhii Repinskyi**
+Created by **Serhii Repinskyi**
 
-Front-End Capstone Project (EPAM Fundamentals 2026)
+- **GitHub**: [SerhiiRepinskyi](https://github.com/SerhiiRepinskyi)
+- **LinkedIn**: [Serhii Repinskyi](http://www.linkedin.com/in/serhii-repinskyi)
+
